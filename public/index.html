@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ | Smart Hospital Flow</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top right, #dff7ff, transparent 35%),
+                linear-gradient(135deg, #f7fbff, #eef7f5);
+
+            color: #17324d;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(255,255,255,0.82);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid #dcecf2;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            color: #087f8c;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background: linear-gradient(
+                135deg,
+                #0a9ca8,
+                #35c6a5
+            );
+
+            color: white;
+
+            font-size: 22px;
+
+            box-shadow:
+                0 8px 20px rgba(10,156,168,0.25);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right span {
+            color: #60788d;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            text-decoration: none;
+
+            padding: 11px 22px;
+
+            border-radius: 10px;
+
+            background: #087f8c;
+
+            color: white;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(8,127,140,0.25);
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+
+            min-height: calc(100vh - 75px);
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            align-items: center;
+
+            gap: 60px;
+
+            padding: 70px 7%;
+        }
+
+        .hero-left {
+            animation: slideLeft 0.8s ease;
+        }
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            background: #e2f8f4;
+
+            color: #087f8c;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 22px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+
+            background: #24b47e;
+
+            border-radius: 50%;
+
+            animation: pulse 1.5s infinite;
+        }
+
+        h1 {
+
+            font-size: clamp(42px, 5vw, 68px);
+
+            line-height: 1.05;
+
+            margin-bottom: 22px;
+
+            letter-spacing: -2px;
+        }
+
+        h1 span {
+            color: #087f8c;
+        }
+
+        .hero-text {
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: #637b8f;
+
+            max-width: 570px;
+
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+
+            text-decoration: none;
+
+            padding: 15px 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #087f8c,
+                    #16a99d
+                );
+
+            color: white;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 10px 25px rgba(8,127,140,0.22);
+
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .secondary-btn {
+
+            text-decoration: none;
+
+            padding: 15px 25px;
+
+            border: 1px solid #cbdde5;
+
+            background: white;
+
+            color: #31536c;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: #f2fafb;
+        }
+
+
+        /* =========================
+           FLOW CARD
+        ========================= */
+
+        .hero-right {
+
+            display: flex;
+
+            justify-content: center;
+
+            animation: slideRight 0.8s ease;
+        }
+
+        .flow-card {
+
+            width: 100%;
+
+            max-width: 570px;
+
+            padding: 28px;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,0.9);
+
+            border: 1px solid #dcecf2;
+
+            box-shadow:
+                0 25px 60px rgba(32,85,105,0.12);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .flow-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            background: #dff8f4;
+
+            border-radius: 50%;
+
+            right: -70px;
+            top: -70px;
+
+            z-index: 0;
+        }
+
+        .flow-title {
+
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .flow-title h2 {
+            font-size: 20px;
+        }
+
+        .live {
+
+            font-size: 12px;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            background: #e6f8ee;
+
+            color: #21865c;
+
+            font-weight: bold;
+        }
+
+        /* FLOW */
+
+        .flow {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+            position: relative;
+        }
+
+        .flow-step {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 13px 15px;
+
+            border-radius: 13px;
+
+            background: #f8fbfc;
+
+            border: 1px solid #e7f0f3;
+
+            transition: 0.3s;
+        }
+
+        .flow-step:hover {
+
+            transform: translateX(7px);
+
+            background: #eefafa;
+
+            border-color: #b9e4e1;
+        }
+
+        .step-icon {
+
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #e2f6f4;
+
+            font-size: 18px;
+
+            flex-shrink: 0;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-info strong {
+            display: block;
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .step-info small {
+            color: #78909f;
+
+            font-size: 11px;
+        }
+
+        .step-status {
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            background: #e9f7f5;
+
+            color: #087f8c;
+        }
+
+        .arrow {
+
+            text-align: center;
+
+            color: #a3bdc7;
+
+            font-size: 13px;
+
+            height: 3px;
+        }
+
+
+        /* =========================
+           MINI STATS
+        ========================= */
+
+        .mini-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .mini-stat {
+
+            padding: 13px;
+
+            background: #f7fafb;
+
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .mini-stat strong {
+
+            display: block;
+
+            font-size: 19px;
+
+            color: #087f8c;
+
+            margin-bottom: 4px;
+        }
+
+        .mini-stat span {
+
+            font-size: 10px;
+
+            color: #78909f;
+        }
+
+
+        /* =========================
+           BOTTOM MESSAGE
+        ========================= */
+
+        .bottom-message {
+
+            text-align: center;
+
+            padding: 15px;
+
+            color: #8095a3;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes pulse {
+
+            0% {
+                box-shadow: 0 0 0 0 rgba(36,180,126,0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(36,180,126,0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(36,180,126,0);
+            }
+        }
+
+        @keyframes slideLeft {
+
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideRight {
+
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media(max-width: 850px) {
+
+            .hero {
+
+                grid-template-columns: 1fr;
+
+                padding-top: 45px;
+
+                gap: 40px;
+            }
+
+            .hero-right {
+                width: 100%;
+            }
+
+            .nav-right span {
+                display: none;
+            }
+
+            h1 {
+                font-size: 45px;
+            }
+        }
+
+        @media(max-width: 500px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .flow-card {
+                padding: 20px;
+            }
+
+            .mini-stats {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .step-status {
+                display: none;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            +
+        </div>
+
+        CareQ
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <a href="/dashboard" style="text-decoration:none; color:#17324d; font-size:14px; font-weight:600;">📊 Live Dashboard</a>
+        <a href="/queue" style="text-decoration:none; color:#17324d; font-size:14px; font-weight:600;">📋 Queue</a>
+        <a href="/beds" style="text-decoration:none; color:#17324d; font-size:14px; font-weight:600;">🛏️ Beds</a>
+        <a href="/reports" style="text-decoration:none; color:#17324d; font-size:14px; font-weight:600;">📑 Medical Reports</a>
+
+        <a
+            class="login-btn"
+            href="/login">
+
+            Staff Login →
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+
+    <!-- LEFT -->
+
+    <div class="hero-left">
+
+        <div class="badge">
+
+            <span class="pulse"></span>
+
+            Smart Hospital Operations
+
+        </div>
+
+
+        <h1>
+
+            Smarter Flow.
+            <br>
+
+            <span>Better Care.</span>
+
+        </h1>
+
+
+        <p class="hero-text">
+
+            CareQ coordinates the complete patient
+            journey — from registration and waiting
+            to consultation, diagnostics, treatment,
+            beds, clinical document management, and discharge.
+
+            <br><br>
+
+            One platform. One connected hospital flow.
+
+        </p>
+
+
+        <div class="buttons">
+
+            <a
+                class="primary-btn"
+                href="/dashboard">
+
+                Launch Operations Dashboard →
+            
+            </a>
+
+
+            <a
+                class="secondary-btn"
+                href="/reports">
+
+                📑 Clinical Records & Uploads
+
+            </a>
+
+
+            <a
+                class="secondary-btn"
+                href="/login">
+
+                🔐 Staff Sign In
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RIGHT -->
+
+    <div
+        class="hero-right"
+        id="flow">
+
+
+        <div class="flow-card">
+
+
+            <div class="flow-title">
+
+                <h2>
+                    Patient Journey
+                </h2>
+
+                <span class="live">
+                    ● LIVE FLOW
+                </span>
+
+            </div>
+
+
+            <div class="flow">
+
+
+                <!-- STEP 1 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        📝
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Registration
+                        </strong>
+
+                        <small>
+                            Patient enters hospital
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Done
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ↓
+                </div>
+
+
+                <!-- STEP 2 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        ⏳
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Waiting Queue
+                        </strong>
+
+                        <small>
+                            Department queue monitored
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Tracking
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ↓
+                </div>
+
+
+                <!-- STEP 3 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        🩺
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Consultation
+                        </strong>
+
+                        <small>
+                            Patient meets healthcare staff
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Next
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ↓
+                </div>
+
+
+                <!-- STEP 4 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        🔬
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Diagnostics
+                        </strong>
+
+                        <small>
+                            Tests when required
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Ready
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ↓
+                </div>
+
+
+                <!-- STEP 5 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        🛏️
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Treatment / Observation
+                        </strong>
+
+                        <small>
+                            Beds and resources coordinated
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Managed
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ↓
+                </div>
+
+
+                <!-- STEP 6 -->
+
+                <div class="flow-step">
+
+                    <div class="step-icon">
+                        ✅
+                    </div>
+
+                    <div class="step-info">
+
+                        <strong>
+                            Discharge
+                        </strong>
+
+                        <small>
+                            Journey completed
+                        </small>
+
+                    </div>
+
+                    <span class="step-status">
+                        Complete
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- MINI STATS -->
+
+            <div class="mini-stats">
+
+                <div class="mini-stat">
+
+                    <strong>24/7</strong>
+
+                    <span>
+                        Flow Monitoring
+                    </span>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <strong>1</strong>
+
+                    <span>
+                        Connected Platform
+                    </span>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <strong>360°</strong>
+
+                    <span>
+                        Patient Journey
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<div class="bottom-message">
+
+    CareQ • Smart Hospital Patient Flow & Resource Coordination Platform
+
+    <br>
+
+    Built to coordinate care operations — not replace clinical decisions.
+
+</div>
+
+
+</body>
+
+</html>

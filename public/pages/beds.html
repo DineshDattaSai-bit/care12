@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ | Bed Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        /* =========================
+           TOP BAR
+        ========================== */
+
+        .topbar {
+            height: 74px;
+            background: #0f172a;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #0ea5e9;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+        }
+
+        .brand p {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 3px;
+        }
+
+        .back-btn {
+            border: 1px solid rgba(255,255,255,.15);
+            background: rgba(255,255,255,.08);
+            color: white;
+
+            padding: 10px 16px;
+            border-radius: 10px;
+
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,.15);
+        }
+
+        /* =========================
+           PAGE
+        ========================== */
+
+        .page {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        /* =========================
+           DEPARTMENT SELECTOR
+        ========================== */
+
+        .selector {
+            max-width: 700px;
+            margin: 70px auto;
+
+            background: white;
+            padding: 40px;
+
+            border-radius: 24px;
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 20px 50px rgba(15,23,42,.08);
+
+            text-align: center;
+        }
+
+        .selector-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: auto auto 18px;
+
+            border-radius: 20px;
+            background: #e0f2fe;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+        }
+
+        .selector h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .selector p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 16px 18px;
+
+            border: 1px solid #dbe2ea;
+            border-radius: 13px;
+
+            background: #f8fafc;
+
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            background: white;
+            border-color: #0ea5e9;
+
+            box-shadow:
+                0 0 0 4px rgba(14,165,233,.1);
+        }
+
+        .department-list {
+            margin-top: 18px;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 10px;
+
+            text-align: left;
+        }
+
+        .department-btn {
+            border: 1px solid #e2e8f0;
+            background: white;
+
+            padding: 15px;
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            transition: .2s;
+        }
+
+        .department-btn:hover {
+            border-color: #38bdf8;
+            background: #f0f9ff;
+
+            transform: translateY(-2px);
+        }
+
+        .department-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+            background: #f1f5f9;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+        .department-name {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .department-code {
+            color: #64748b;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================== */
+
+        #departmentDashboard {
+            display: none;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .department-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .department-title-icon {
+            width: 55px;
+            height: 55px;
+
+            border-radius: 15px;
+            background: #e0f2fe;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+        }
+
+        .department-title h2 {
+            font-size: 27px;
+        }
+
+        .department-title p {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .change-btn {
+            border: 1px solid #dbe2ea;
+            background: white;
+
+            padding: 11px 16px;
+
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 18px;
+        }
+
+        .stat {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+
+            padding: 20px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat::after {
+            content: "";
+
+            position: absolute;
+
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+
+            right: -25px;
+            top: -25px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 11px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-number {
+            font-size: 29px;
+            font-weight: 800;
+
+            margin-top: 8px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-sub {
+            font-size: 10px;
+            color: #94a3b8;
+
+            margin-top: 5px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .available .stat-number {
+            color: #16a34a;
+        }
+
+        .occupied .stat-number {
+            color: #dc2626;
+        }
+
+        .cleaning .stat-number {
+            color: #d97706;
+        }
+
+        /* =========================
+           OCCUPANCY
+        ========================== */
+
+        .occupancy {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .occupancy-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 12px;
+        }
+
+        .occupancy-head strong {
+            font-size: 14px;
+        }
+
+        #occupancyPercent {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .progress {
+            height: 12px;
+
+            background: #e2e8f0;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #22c55e,
+                    #0ea5e9
+                );
+
+            transition: width .5s ease;
+        }
+
+        /* =========================
+           ALERT
+        ========================== */
+
+        .alert {
+            display: none;
+
+            padding: 16px 18px;
+
+            border-radius: 13px;
+
+            margin-bottom: 20px;
+
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+
+            color: #9a3412;
+        }
+
+        .alert strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .alert p {
+            font-size: 12px;
+        }
+
+        /* =========================
+           BED PANEL
+        ========================== */
+
+        .bed-panel {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+
+            overflow: hidden;
+        }
+
+        .bed-header {
+            padding: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .bed-header h3 {
+            font-size: 17px;
+        }
+
+        .bed-header p {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .bed-search {
+            padding: 10px 13px;
+
+            border: 1px solid #dbe2ea;
+            border-radius: 9px;
+
+            outline: none;
+        }
+
+        .bed-search:focus {
+            border-color: #0ea5e9;
+        }
+
+        .bed-grid {
+            padding: 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(190px, 1fr));
+
+            gap: 13px;
+        }
+
+        /* =========================
+           BED CARD
+        ========================== */
+
+        .bed {
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding: 16px;
+
+            background: #fafafa;
+
+            transition: .2s;
+        }
+
+        .bed:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(15,23,42,.06);
+        }
+
+        .bed-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .bed-number {
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .status {
+            font-size: 9px;
+            font-weight: 700;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            white-space: nowrap;
+        }
+
+        .available-status {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .occupied-status {
+            color: #991b1b;
+            background: #fee2e2;
+        }
+
+        .cleaning-status {
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        .reserved-status {
+            color: #1e40af;
+            background: #dbeafe;
+        }
+
+        .maintenance-status {
+            color: #581c87;
+            background: #f3e8ff;
+        }
+
+        .bed-info {
+            margin-top: 12px;
+
+            font-size: 11px;
+            color: #64748b;
+
+            min-height: 32px;
+        }
+
+        .bed-actions {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 6px;
+
+            margin-top: 13px;
+        }
+
+        .bed-actions button {
+            border: none;
+
+            padding: 7px 9px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+
+            background: #e2e8f0;
+        }
+
+        .bed-actions button:hover {
+            background: #cbd5e1;
+        }
+
+        .primary {
+            background: #0ea5e9 !important;
+            color: white;
+        }
+
+        .danger {
+            background: #fee2e2 !important;
+            color: #991b1b;
+        }
+
+        .success {
+            background: #dcfce7 !important;
+            color: #166534;
+        }
+
+        /* =========================
+           LOADING
+        ========================== */
+
+        .loading {
+            text-align: center;
+
+            padding: 45px;
+
+            color: #64748b;
+
+            grid-column: 1 / -1;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================== */
+
+        .empty-state {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #64748b;
+
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .page {
+                padding: 18px;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .brand h1 {
+                font-size: 16px;
+            }
+
+            .brand p {
+                display: none;
+            }
+
+            .department-list {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
+                gap: 15px;
+
+                flex-direction: column;
+            }
+
+            .bed-header {
+                flex-direction: column;
+                align-items: stretch;
+
+                gap: 12px;
+            }
+
+            .bed-search {
+                width: 100%;
+            }
+
+            .selector {
+                margin: 30px auto;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOP BAR
+====================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🛏️
+        </div>
+
+        <div>
+            <h1>CareQ Bed Command Center</h1>
+
+            <p>
+                Hospital bed availability and occupancy control
+            </p>
+        </div>
+
+    </div>
+
+    <div style="display:flex; gap: 10px; align-items: center;">
+        <button class="back-btn" onclick="window.location.href='/queue'">📋 Queue</button>
+        <button class="back-btn" onclick="window.location.href='/reports'">📑 Reports</button>
+        <button class="back-btn" onclick="goDashboard()">← Dashboard</button>
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <!-- =================================================
+         DEPARTMENT SELECTOR
+    ================================================== -->
+
+    <section
+        id="departmentSelector"
+        class="selector"
+    >
+
+        <div class="selector-icon">
+            🏥
+        </div>
+
+        <h2>
+            Select Department
+        </h2>
+
+        <p>
+            Choose a department to open its Bed Management Dashboard.
+        </p>
+
+        <div class="search-box">
+
+            <input
+                id="departmentSearch"
+                type="text"
+                placeholder="Search department..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div
+            id="departmentList"
+            class="department-list"
+        >
+            <div class="loading">
+                Loading departments...
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DEPARTMENT DASHBOARD
+    ================================================== -->
+
+    <section
+        id="departmentDashboard"
+    >
+
+        <div class="dashboard-header">
+
+            <div class="department-title">
+
+                <div
+                    id="departmentIcon"
+                    class="department-title-icon"
+                >
+                    🏥
+                </div>
+
+                <div>
+
+                    <h2 id="departmentName">
+                        Department
+                    </h2>
+
+                    <p id="departmentDescription">
+                        Bed Management
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button
+                class="change-btn"
+                onclick="showDepartments()"
+            >
+                ← Change Department
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    TOTAL BEDS
+                </div>
+
+                <div
+                    id="totalBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Department capacity
+                </div>
+
+            </div>
+
+
+            <div class="stat available">
+
+                <div class="stat-label">
+                    AVAILABLE
+                </div>
+
+                <div
+                    id="availableBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Ready for admission
+                </div>
+
+            </div>
+
+
+            <div class="stat occupied">
+
+                <div class="stat-label">
+                    OCCUPIED
+                </div>
+
+                <div
+                    id="filledBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Currently occupied
+                </div>
+
+            </div>
+
+
+            <div class="stat cleaning">
+
+                <div class="stat-label">
+                    CLEANING
+                </div>
+
+                <div
+                    id="cleaningBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Awaiting preparation
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    WAITING PATIENTS
+                </div>
+
+                <div
+                    id="waitingPatients"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Waiting for admission
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    RESERVED
+                </div>
+
+                <div
+                    id="reservedBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Reserved beds
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    MAINTENANCE
+                </div>
+
+                <div
+                    id="maintenanceBeds"
+                    class="stat-number"
+                >
+                    0
+                </div>
+
+                <div class="stat-sub">
+                    Temporarily unavailable
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    OCCUPANCY
+                </div>
+
+                <div
+                    id="occupancyRate"
+                    class="stat-number"
+                >
+                    0%
+                </div>
+
+                <div class="stat-sub">
+                    Current utilization
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             OCCUPANCY BAR
+        ================================================== -->
+
+        <div class="occupancy">
+
+            <div class="occupancy-head">
+
+                <strong>
+                    Department Occupancy
+                </strong>
+
+                <span id="occupancyPercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="occupancyBar"
+                    class="progress-bar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ALERT
+        ================================================== -->
+
+        <div
+            id="capacityAlert"
+            class="alert"
+        >
+
+            <strong id="alertTitle">
+                Bed Capacity Alert
+            </strong>
+
+            <p id="alertMessage">
+                No alert.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             BED INVENTORY
+        ================================================== -->
+
+        <div class="bed-panel">
+
+            <div class="bed-header">
+
+                <div>
+
+                    <h3>
+                        Bed Inventory
+                    </h3>
+
+                    <p>
+                        Manage every bed assigned to this department.
+                    </p>
+
+                </div>
+
+                <input
+                    id="bedSearch"
+                    class="bed-search"
+                    type="text"
+                    placeholder="Search bed number..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div
+                id="bedGrid"
+                class="bed-grid"
+            >
+
+                <div class="loading">
+                    Select a department to load beds.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let departments = [];
+let currentDepartment = "";
+let currentBeds = [];
+
+
+/* =====================================================
+   DEPARTMENT ICONS
+===================================================== */
+
+const departmentIcons = {
+
+    "Emergency": "🚨",
+    "Cardiology": "❤️",
+    "General Ward": "🏥",
+    "Neurology": "🧠",
+    "Orthopedics": "🦴",
+    "Pediatrics": "👶",
+    "Maternity": "🤰"
+
+};
+
+
+/* =====================================================
+   LOAD DEPARTMENTS
+===================================================== */
+
+async function loadDepartments() {
+
+    const list =
+        document.getElementById(
+            "departmentList"
+        );
+
+    list.innerHTML = `
+        <div class="loading">
+            Loading departments...
+        </div>
+    `;
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/beds/departments"
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Server returned ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "Invalid department data received"
+            );
+
+        }
+
+        departments = data;
+
+        renderDepartments();
+
+    } catch (error) {
+
+        console.error(
+            "Department loading error:",
+            error
+        );
+
+        list.innerHTML = `
+            <div class="loading">
+                <strong>
+                    Unable to load departments
+                </strong>
+
+                <br><br>
+
+                ${escapeHTML(error.message)}
+
+                <br><br>
+
+                Make sure the CareQ server is running.
+            </div>
+        `;
+    }
+}
+
+
+/* =====================================================
+   RENDER DEPARTMENTS
+===================================================== */
+
+function renderDepartments() {
+
+    const list =
+        document.getElementById(
+            "departmentList"
+        );
+
+    const search =
+        document
+            .getElementById(
+                "departmentSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+    const filtered =
+        departments.filter(
+            department => {
+
+                const name =
+                    typeof department === "string"
+                        ? department
+                        : (
+                            department.name ||
+                            department.department ||
+                            ""
+                        );
+
+                return String(name)
+                    .toLowerCase()
+                    .includes(search);
+            }
+        );
+
+
+    if (filtered.length === 0) {
+
+        list.innerHTML = `
+            <div class="loading">
+                No department found.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    filtered.forEach(
+        department => {
+
+            const name =
+                typeof department === "string"
+                    ? department
+                    : (
+                        department.name ||
+                        department.department ||
+                        "Department"
+                    );
+
+            const code =
+                typeof department === "object"
+                    ? (
+                        department.code ||
+                        getDepartmentCode(name)
+                    )
+                    : getDepartmentCode(name);
+
+            const icon =
+                typeof department === "object"
+                    ? (
+                        department.icon ||
+                        departmentIcons[name] ||
+                        "🏥"
+                    )
+                    : (
+                        departmentIcons[name] ||
+                        "🏥"
+                    );
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "department-btn";
+
+            button.innerHTML = `
+
+                <div class="department-icon">
+                    ${escapeHTML(icon)}
+                </div>
+
+                <div>
+
+                    <div class="department-name">
+                        ${escapeHTML(name)}
+                    </div>
+
+                    <div class="department-code">
+                        Department Code: ${escapeHTML(code)}
+                    </div>
+
+                </div>
+
+            `;
+
+            button.onclick =
+                () => openDepartment(name);
+
+            list.appendChild(button);
+
+        }
+    );
+}
+
+
+/* =====================================================
+   DEPARTMENT CODE
+===================================================== */
+
+function getDepartmentCode(name) {
+
+    const codes = {
+
+        "Emergency": "E",
+        "Cardiology": "C",
+        "General Ward": "G",
+        "Neurology": "N",
+        "Orthopedics": "O",
+        "Pediatrics": "P",
+        "Maternity": "M"
+
+    };
+
+    return (
+        codes[name] ||
+        String(name).charAt(0).toUpperCase()
+    );
+}
+
+
+/* =====================================================
+   DEPARTMENT SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "departmentSearch"
+    )
+    .addEventListener(
+        "input",
+        renderDepartments
+    );
+
+
+/* =====================================================
+   OPEN DEPARTMENT
+===================================================== */
+
+async function openDepartment(
+    department
+) {
+
+    currentDepartment =
+        department;
+
+
+    document
+        .getElementById(
+            "departmentSelector"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "departmentDashboard"
+        )
+        .style.display = "block";
+
+
+    document
+        .getElementById(
+            "departmentName"
+        )
+        .textContent =
+            department;
+
+
+    document
+        .getElementById(
+            "departmentIcon"
+        )
+        .textContent =
+            departmentIcons[department] ||
+            "🏥";
+
+
+    document
+        .getElementById(
+            "departmentDescription"
+        )
+        .textContent =
+            `${department} · Bed Management`;
+
+
+    document
+        .getElementById(
+            "bedSearch"
+        )
+        .value = "";
+
+
+    await loadDepartmentData();
+}
+
+
+/* =====================================================
+   LOAD DEPARTMENT BED DATA
+===================================================== */
+
+async function loadDepartmentData() {
+
+    const grid =
+        document.getElementById(
+            "bedGrid"
+        );
+
+
+    grid.innerHTML = `
+        <div class="loading">
+            Loading bed information...
+        </div>
+    `;
+
+
+    try {
+
+        const url =
+            "/api/beds/department/" +
+            encodeURIComponent(
+                currentDepartment
+            );
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            let message =
+                `Server returned ${response.status}`;
+
+            try {
+
+                const errorData =
+                    await response.json();
+
+                if (errorData.message) {
+
+                    message =
+                        errorData.message;
+                }
+
+            } catch (error) {
+                /* Ignore JSON parsing error */
+            }
+
+            throw new Error(message);
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Bed department data:",
+            data
+        );
+
+
+        updateStatistics(data);
+
+
+        currentBeds =
+            Array.isArray(data.beds)
+                ? data.beds
+                : [];
+
+
+        renderBeds();
+
+
+    } catch (error) {
+
+        console.error(
+            "Bed loading error:",
+            error
+        );
+
+        grid.innerHTML = `
+            <div class="loading">
+
+                <strong>
+                    Unable to load bed information
+                </strong>
+
+                <br><br>
+
+                ${escapeHTML(error.message)}
+
+                <br><br>
+
+                Department:
+                ${escapeHTML(currentDepartment)}
+
+            </div>
+        `;
+    }
+}
+
+
+/* =====================================================
+   UPDATE STATISTICS
+===================================================== */
+
+function updateStatistics(data) {
+
+    const total =
+        Number(
+            data.totalBeds || 0
+        );
+
+    const available =
+        Number(
+            data.availableBeds ??
+            data.emptyBeds ??
+            0
+        );
+
+    const occupied =
+        Number(
+            data.filledBeds || 0
+        );
+
+    const cleaning =
+        Number(
+            data.cleaningBeds || 0
+        );
+
+    const reserved =
+        Number(
+            data.reservedBeds || 0
+        );
+
+    const maintenance =
+        Number(
+            data.maintenanceBeds || 0
+        );
+
+    const waiting =
+        Number(
+            data.waitingPatients || 0
+        );
+
+    const rate =
+        Number(
+            data.occupancyRate || 0
+        );
+
+
+    document.getElementById(
+        "totalBeds"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "availableBeds"
+    ).textContent =
+        available;
+
+
+    document.getElementById(
+        "filledBeds"
+    ).textContent =
+        occupied;
+
+
+    document.getElementById(
+        "cleaningBeds"
+    ).textContent =
+        cleaning;
+
+
+    document.getElementById(
+        "reservedBeds"
+    ).textContent =
+        reserved;
+
+
+    document.getElementById(
+        "maintenanceBeds"
+    ).textContent =
+        maintenance;
+
+
+    document.getElementById(
+        "waitingPatients"
+    ).textContent =
+        waiting;
+
+
+    document.getElementById(
+        "occupancyRate"
+    ).textContent =
+        `${rate}%`;
+
+
+    document.getElementById(
+        "occupancyPercent"
+    ).textContent =
+        `${rate}%`;
+
+
+    document.getElementById(
+        "occupancyBar"
+    ).style.width =
+        `${Math.min(Math.max(rate, 0), 100)}%`;
+
+
+    /* =========================
+       CAPACITY ALERT
+    ========================== */
+
+    const alert =
+        document.getElementById(
+            "capacityAlert"
+        );
+
+
+    if (
+        data.availabilityMessage &&
+        (
+            available === 0 ||
+            occupied >= total
+        )
+    ) {
+
+        alert.style.display =
+            "block";
+
+
+        document.getElementById(
+            "alertTitle"
+        ).textContent =
+            "🚨 Bed Capacity Alert";
+
+
+        document.getElementById(
+            "alertMessage"
+        ).textContent =
+            data.availabilityMessage;
+
+    } else if (
+        data.availabilityMessage &&
+        available <= 5
+    ) {
+
+        alert.style.display =
+            "block";
+
+
+        document.getElementById(
+            "alertTitle"
+        ).textContent =
+            "⚠️ Low Bed Availability";
+
+
+        document.getElementById(
+            "alertMessage"
+        ).textContent =
+            data.availabilityMessage;
+
+    } else {
+
+        alert.style.display =
+            "none";
+    }
+}
+
+
+/* =====================================================
+   BED SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "bedSearch"
+    )
+    .addEventListener(
+        "input",
+        renderBeds
+    );
+
+
+/* =====================================================
+   RENDER BEDS
+===================================================== */
+
+function renderBeds() {
+
+    const grid =
+        document.getElementById(
+            "bedGrid"
+        );
+
+
+    const search =
+        document
+            .getElementById(
+                "bedSearch"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const filtered =
+        currentBeds.filter(
+            bed => {
+
+                const number =
+                    bed.bed_number ||
+                    bed.bedNumber ||
+                    bed.bed_id ||
+                    bed.id ||
+                    "";
+
+                const status =
+                    bed.status ||
+                    "";
+
+                const patient =
+                    bed.patient_id ||
+                    "";
+
+
+                const searchableText =
+                    `
+                    ${number}
+                    ${status}
+                    ${patient}
+                    `
+                    .toLowerCase();
+
+
+                return searchableText
+                    .includes(search);
+            }
+        );
+
+
+    if (filtered.length === 0) {
+
+        grid.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-state-icon">
+                    🛏️
+                </div>
+
+                <strong>
+                    No beds found
+                </strong>
+
+                <p style="margin-top:6px;">
+                    Try another bed number or status.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    grid.innerHTML = "";
+
+
+    filtered.forEach(
+        bed => {
+
+            grid.appendChild(
+                createBedCard(bed)
+            );
+
+        }
+    );
+}
+
+
+/* =====================================================
+   CREATE BED CARD
+===================================================== */
+
+function createBedCard(bed) {
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "bed";
+
+
+    const id =
+        Number(
+            bed.id
+        );
+
+
+    const bedNumber =
+        bed.bed_number ||
+        bed.bedNumber ||
+        bed.bed_id ||
+        `BED-${id}`;
+
+
+    const status =
+        bed.status ||
+        "Available";
+
+
+    const patientId =
+        bed.patient_id ||
+        bed.patientId ||
+        "";
+
+
+    const statusClass =
+        getStatusClass(status);
+
+
+    let patientText =
+        "Ready for admission";
+
+
+    if (
+        status === "Occupied"
+    ) {
+
+        patientText =
+            patientId
+                ? `Patient ID: ${patientId}`
+                : "Patient admitted";
+
+    } else if (
+        status === "Cleaning"
+    ) {
+
+        patientText =
+            "Cleaning in progress";
+
+    } else if (
+        status === "Reserved"
+    ) {
+
+        patientText =
+            "Reserved for patient";
+
+    } else if (
+        status === "Maintenance"
+    ) {
+
+        patientText =
+            "Maintenance required";
+    }
+
+
+    card.innerHTML = `
+
+        <div class="bed-top">
+
+            <div class="bed-number">
+                ${escapeHTML(
+                    String(bedNumber)
+                )}
+            </div>
+
+            <div
+                class="status ${statusClass}"
+            >
+                ${escapeHTML(
+                    status
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="bed-info">
+            ${escapeHTML(
+                patientText
+            )}
+        </div>
+
+
+        <div class="bed-actions">
+
+            ${getBedActions(
+                id,
+                status
+            )}
+
+        </div>
+
+    `;
+
+
+    return card;
+}
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(status) {
+
+    switch (
+        String(status).toLowerCase()
+    ) {
+
+        case "occupied":
+            return "occupied-status";
+
+        case "cleaning":
+            return "cleaning-status";
+
+        case "reserved":
+            return "reserved-status";
+
+        case "maintenance":
+            return "maintenance-status";
+
+        default:
+            return "available-status";
+    }
+}
+
+
+/* =====================================================
+   BED ACTIONS
+===================================================== */
+
+function getBedActions(
+    id,
+    status
+) {
+
+    if (
+        status === "Available"
+    ) {
+
+        return `
+
+            <button
+                class="primary"
+                onclick="admitBed(${id})"
+            >
+                Admit
+            </button>
+
+            <button
+                onclick="reserveBed(${id})"
+            >
+                Reserve
+            </button>
+
+            <button
+                onclick="maintenanceBed(${id})"
+            >
+                Maintenance
+            </button>
+
+        `;
+    }
+
+
+    if (
+        status === "Occupied"
+    ) {
+
+        return `
+
+            <button
+                class="danger"
+                onclick="dischargeBed(${id})"
+            >
+                Discharge
+            </button>
+
+        `;
+    }
+
+
+    if (
+        status === "Cleaning"
+    ) {
+
+        return `
+
+            <button
+                class="success"
+                onclick="cleanBed(${id})"
+            >
+                Mark Available
+            </button>
+
+        `;
+    }
+
+
+    if (
+        status === "Reserved"
+    ) {
+
+        return `
+
+            <button
+                class="primary"
+                onclick="admitBed(${id})"
+            >
+                Admit
+            </button>
+
+            <button
+                onclick="releaseBed(${id})"
+            >
+                Release
+            </button>
+
+        `;
+    }
+
+
+    if (
+        status === "Maintenance"
+    ) {
+
+        return `
+
+            <button
+                class="success"
+                onclick="completeMaintenance(${id})"
+            >
+                Complete
+            </button>
+
+        `;
+    }
+
+
+    return "";
+}
+
+
+/* =====================================================
+   BED ACTION
+===================================================== */
+
+async function bedAction(
+    id,
+    endpoint,
+    options = {}
+) {
+
+    try {
+
+        const requestOptions = {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type":
+                    "application/json"
+            }
+
+        };
+
+
+        if (
+            Object.keys(options).length > 0
+        ) {
+
+            requestOptions.body =
+                JSON.stringify(
+                    options
+                );
+        }
+
+
+        const response =
+            await fetch(
+                `/api/beds/${id}/${endpoint}`,
+                requestOptions
+            );
+
+
+        let data = {};
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch (error) {
+
+            data = {};
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                `Bed operation failed (${response.status})`
+            );
+        }
+
+
+        await loadDepartmentData();
+
+
+        if (data.message) {
+
+            console.log(
+                data.message
+            );
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Bed action error:",
+            error
+        );
+
+        alert(
+            error.message
+        );
+    }
+}
+
+
+/* =====================================================
+   ADMIT
+===================================================== */
+
+async function admitBed(id) {
+
+    const patientId =
+        prompt(
+            "Enter Patient ID to admit:"
+        );
+
+
+    if (
+        patientId === null ||
+        patientId.trim() === ""
+    ) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "admit",
+        {
+            patientId:
+                patientId.trim()
+        }
+    );
+}
+
+
+/* =====================================================
+   DISCHARGE
+===================================================== */
+
+async function dischargeBed(id) {
+
+    const confirmed =
+        confirm(
+            "Discharge the patient from this bed?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "discharge"
+    );
+}
+
+
+/* =====================================================
+   CLEAN
+===================================================== */
+
+async function cleanBed(id) {
+
+    await bedAction(
+        id,
+        "clean"
+    );
+}
+
+
+/* =====================================================
+   RESERVE
+===================================================== */
+
+async function reserveBed(id) {
+
+    const confirmed =
+        confirm(
+            "Reserve this available bed?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "reserve"
+    );
+}
+
+
+/* =====================================================
+   RELEASE
+===================================================== */
+
+async function releaseBed(id) {
+
+    const confirmed =
+        confirm(
+            "Release this reserved bed?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "release"
+    );
+}
+
+
+/* =====================================================
+   MAINTENANCE
+===================================================== */
+
+async function maintenanceBed(id) {
+
+    const confirmed =
+        confirm(
+            "Move this bed to maintenance?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "maintenance"
+    );
+}
+
+
+/* =====================================================
+   COMPLETE MAINTENANCE
+===================================================== */
+
+async function completeMaintenance(id) {
+
+    const confirmed =
+        confirm(
+            "Complete maintenance and make this bed available?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    await bedAction(
+        id,
+        "maintenance/complete"
+    );
+}
+
+
+/* =====================================================
+   SHOW DEPARTMENTS
+===================================================== */
+
+function showDepartments() {
+
+    currentDepartment = "";
+    currentBeds = [];
+
+
+    document
+        .getElementById(
+            "departmentDashboard"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "departmentSelector"
+        )
+        .style.display = "block";
+
+
+    document
+        .getElementById(
+            "departmentSearch"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "bedSearch"
+        )
+        .value = "";
+
+
+    renderDepartments();
+}
+
+
+/* =====================================================
+   GO TO DASHBOARD
+
+   IMPORTANT:
+   dashboard.html is directly inside /public
+===================================================== */
+
+function goDashboard() {
+
+    window.location.href =
+        "/dashboard.html";
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+setInterval(
+    function() {
+
+        if (
+            currentDepartment
+        ) {
+
+            loadDepartmentData();
+
+        }
+
+    },
+    5000
+);
+
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
+
+loadDepartments();
+
+</script>
+
+</body>
+</html>

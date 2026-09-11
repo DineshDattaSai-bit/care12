@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Reports - CareQ</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .patients {
+            margin-top: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .patient {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .patient:last-child {
+            border-bottom: none;
+        }
+
+        .patient-id {
+            font-weight: bold;
+        }
+
+        .view-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Patient Reports</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="patientSearch"
+                placeholder="Search Patient ID or Name..."
+            >
+        </div>
+
+        <div class="patients">
+
+            <h2>Patients</h2>
+
+            <div id="patientList">
+                <!-- Patients will come from database in Step 2 -->
+                <p>No patients loaded yet.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

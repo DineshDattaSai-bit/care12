@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ - Patient Registration</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fb;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #087ea4;
+
+        }
+
+
+        .back {
+
+            text-decoration: none;
+
+            color: #087ea4;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        main {
+
+            max-width: 850px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+
+        }
+
+
+        .title {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .title h1 {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .title p {
+
+            color: #777;
+
+        }
+
+
+        /* =========================
+           FORM CARD
+        ========================== */
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.07);
+
+        }
+
+
+        .card h2 {
+
+            color: #087ea4;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .full {
+
+            grid-column: span 2;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #087ea4;
+
+        }
+
+
+        button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 25px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #087ea4;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        button:hover {
+
+            background: #066982;
+
+        }
+
+
+        #message {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           PATIENT ID
+        ========================== */
+
+        #patientId {
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: #eef7fa;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            color: #087ea4;
+
+            font-weight: bold;
+
+            display: none;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 650px) {
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .full {
+
+                grid-column: span 1;
+
+            }
+
+            header {
+
+                padding: 0 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================== -->
+
+<header>
+
+    <div class="logo" style="display:flex; align-items:center; gap: 8px;">
+        <span style="background:#087ea4; color:white; border-radius:8px; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; font-size:18px;">+</span>
+        CareQ
+    </div>
+
+    <div style="display:flex; gap: 16px; align-items:center;">
+        <a href="/queue" class="back">📋 View Queue</a>
+        <a href="/reports" class="back">📑 Clinical Reports</a>
+        <a href="/dashboard" class="back">← Dashboard</a>
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================== -->
+
+<main>
+
+
+    <div class="title">
+
+        <h1>
+            Patient Registration
+        </h1>
+
+        <p>
+            Register a patient and start their
+            CareQ hospital journey.
+        </p>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            Patient Details
+        </h2>
+
+
+        <form id="patientForm">
+
+
+            <div class="form-grid">
+
+
+                <!-- NAME -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Patient Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter patient name"
+                        required>
+
+                </div>
+
+
+                <!-- AGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        min="0"
+                        max="120"
+                        placeholder="Enter age"
+                        required>
+
+                </div>
+
+
+                <!-- GENDER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select id="gender" required>
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Department
+                    </label>
+
+                    <select
+                        id="department"
+                        required>
+
+                        <option value="">
+                            Select department
+                        </option>
+
+                        <option value="General Medicine">
+                            General Medicine
+                        </option>
+
+                        <option value="Cardiology">
+                            Cardiology
+                        </option>
+
+                        <option value="Emergency">
+                            Emergency
+                        </option>
+
+                        <option value="Orthopedics">
+                            Orthopedics
+                        </option>
+
+                        <option value="Pediatrics">
+                            Pediatrics
+                        </option>
+
+                        <option value="Diagnostics">
+                            Diagnostics
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button type="submit">
+
+                Register Patient
+
+            </button>
+
+
+        </form>
+
+
+        <div id="message"></div>
+
+        <div id="patientId"></div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+// ===============================
+// PATIENT REGISTRATION
+// ===============================
+
+document
+    .getElementById("patientForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById("name").value;
+
+            const age =
+                document.getElementById("age").value;
+
+            const gender =
+                document.getElementById("gender").value;
+
+            const department =
+                document.getElementById("department").value;
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/patients/register",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                name: name,
+
+                                age: age,
+
+                                gender: gender,
+
+                                department: department
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                const message =
+                    document.getElementById(
+                        "message"
+                    );
+
+
+                const patientId =
+                    document.getElementById(
+                        "patientId"
+                    );
+
+
+                message.innerText =
+                    data.message;
+
+
+                if (data.success) {
+
+                    message.style.color =
+                        "green";
+
+
+                    patientId.style.display =
+                        "block";
+
+
+                    patientId.innerText =
+                        "Patient ID: " +
+                        data.patientId;
+
+
+                    document
+                        .getElementById("patientForm")
+                        .reset();
+
+                } else {
+
+                    message.style.color =
+                        "red";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                document
+                    .getElementById("message")
+                    .innerText =
+                    "Server error. Please try again.";
+
+                document
+                    .getElementById("message")
+                    .style.color =
+                    "red";
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

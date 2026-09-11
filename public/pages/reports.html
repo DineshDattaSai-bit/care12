@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareQ | Clinical Reports & Document Management</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary: #087f8c;
+            --primary-light: #e6f6f8;
+            --primary-dark: #065b64;
+            --accent: #0ea5e9;
+            --navy: #0f172a;
+            --bg: #f4f8fb;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            height: 72px;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0ea5e9, #087f8c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        .brand h1 {
+            font-size: 19px;
+            font-weight: 750;
+            letter-spacing: -0.3px;
+        }
+
+        .brand p {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 9px 15px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+
+        /* MAIN LAYOUT */
+        .container {
+            max-width: 1380px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 28px 24px;
+            flex: 1;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-header h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* GRID */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 24px;
+        }
+
+        /* PATIENT SELECTOR SIDEBAR */
+        .patient-selector-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            height: fit-content;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            background: #f8fafc;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.12);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .patient-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 580px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .patient-item {
+            padding: 13px 15px;
+            border-radius: 12px;
+            border: 1px solid #edf2f7;
+            background: #fafbfc;
+            cursor: pointer;
+            transition: 0.2s ease;
+            text-align: left;
+        }
+
+        .patient-item:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateX(3px);
+        }
+
+        .patient-item.selected {
+            background: #e0f2fe;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        }
+
+        .patient-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .patient-id-badge {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--primary);
+            background: white;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #dcecf2;
+        }
+
+        .patient-item-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        .patient-item-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            display: flex;
+            gap: 8px;
+        }
+
+        /* MAIN CONTENT AREA */
+        .dossier-area {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* EMPTY STATE */
+        .empty-selection {
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-selection-icon {
+            font-size: 54px;
+            margin-bottom: 16px;
+        }
+
+        .empty-selection h3 {
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        /* PATIENT PROFILE CARD */
+        .profile-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+            position: relative;
+        }
+
+        .profile-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .profile-identity {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #0ea5e9, #087f8c);
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-identity h3 {
+            font-size: 22px;
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
+
+        .status-Registered { background: #e0f2fe; color: #0284c7; }
+        .status-Waiting { background: #fef3c7; color: #b45309; }
+        .status-Consultation { background: #e0e7ff; color: #4338ca; }
+        .status-Diagnostics { background: #fce7f3; color: #be185d; }
+        .status-Treatment { background: #fed7aa; color: #c2410c; }
+        .status-Discharge { background: #dcfce7; color: #15803d; }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 14px;
+        }
+
+        .stat-item {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-val {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-top: 4px;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(8, 127, 140, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--navy);
+        }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        /* DOCUMENT UPLOAD & MANAGEMENT TABS */
+        .section-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title h4 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* UPLOAD ZONE */
+        .upload-dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            background: #fafbfc;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .upload-dropzone:hover, .upload-dropzone.dragover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .dropzone-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .upload-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 13px;
+            outline: none;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.1);
+        }
+
+        /* DOCUMENT GALLERY */
+        .document-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .document-card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+
+        .document-card:hover {
+            border-color: #94a3b8;
+            background: white;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .doc-top {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .doc-type-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #e0f2fe;
+            color: #0369a1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .doc-info h5 {
+            font-size: 14px;
+            font-weight: 750;
+            color: var(--navy);
+            word-break: break-word;
+        }
+
+        .doc-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            color: #475569;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .doc-notes {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 12px 0 8px;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .doc-meta {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .doc-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .doc-btn {
+            flex: 1;
+            text-align: center;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--navy);
+            transition: 0.2s;
+        }
+
+        .doc-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .doc-btn.danger {
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        .doc-btn.danger:hover {
+            background: #fee2e2;
+        }
+
+        /* ALERT TOAST */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--navy);
+            color: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* PRINT STYLING */
+        @media print {
+            .topbar, .patient-selector-card, .upload-dropzone, .upload-form-grid, #uploadSubmitBtn, .doc-actions, .nav-links, .action-btns {
+                display: none !important;
+            }
+            body, .container {
+                background: white !important;
+                padding: 0 !important;
+            }
+            .reports-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .section-card, .profile-card {
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+            .topbar {
+                padding: 0 16px;
+            }
+            .nav-links span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <a href="/" class="brand">
+            <div class="brand-icon">+</div>
+            <div>
+                <h1>CareQ Clinical Records</h1>
+                <p>Medical Dossier & Patient Document Repository</p>
+            </div>
+        </a>
+
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-btn">📊 <span>Dashboard</span></a>
+            <a href="/patients" class="nav-btn">👤 <span>Patients</span></a>
+            <a href="/queue" class="nav-btn">📋 <span>Queue</span></a>
+            <a href="/beds" class="nav-btn">🛏️ <span>Beds</span></a>
+            <a href="/departments" class="nav-btn">🏢 <span>Departments</span></a>
+            <a href="/audit" class="nav-btn">📜 <span>Audit</span></a>
+            <a href="/reports" class="nav-btn active">📑 <span>Reports</span></a>
+        </div>
+    </header>
+
+    <!-- CONTAINER -->
+    <main class="container">
+        <div class="page-header">
+            <div>
+                <h2>Clinical Reports & Medical Document Repository</h2>
+                <p>Search patients, view complete journey records, and attach official medical documents & lab findings.</p>
+            </div>
+            <div class="action-btns">
+                <button class="btn btn-outline" onclick="window.print()">🖨️ Print Clinical Summary</button>
+                <a href="/patients" class="btn btn-primary">+ Register New Patient</a>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <!-- LEFT: PATIENT PICKER -->
+            <aside class="patient-selector-card">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="patientSearchInput" placeholder="Search patient ID or name..." oninput="filterPatients()">
+                </div>
+
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">
+                    Select Patient Record (<span id="patientCount">0</span>)
+                </div>
+
+                <div class="patient-list" id="patientListContainer">
+                    <div style="text-align:center; padding: 20px; color: var(--text-muted);">Loading patients...</div>
+                </div>
+            </aside>
+
+            <!-- RIGHT: PATIENT CLINICAL DOSSIER -->
+            <section class="dossier-area">
+                <!-- EMPTY STATE -->
+                <div id="emptySelection" class="empty-selection">
+                    <div class="empty-selection-icon">📂</div>
+                    <h3>Select a Patient from the Directory</h3>
+                    <p>Choose any patient on the left to inspect their journey, view clinical reports, and upload medical documents.</p>
+                </div>
+
+                <!-- PROFILE DOSSIER (HIDDEN BY DEFAULT) -->
+                <div id="patientDossier" style="display: none; flex-direction: column; gap: 24px;">
+                    <!-- PROFILE HEADER -->
+                    <div class="profile-card">
+                        <div class="profile-top">
+                            <div class="profile-identity">
+                                <div class="profile-avatar" id="dossierAvatar">CQ</div>
+                                <div>
+                                    <div style="display:flex; align-items:center; gap: 10px;">
+                                        <h3 id="dossierName">Patient Name</h3>
+                                        <span id="dossierStatus" class="status-pill status-Registered">Registered</span>
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+                                        Patient ID: <strong id="dossierId" style="color: var(--primary);">CQ0001</strong> • Registered: <span id="dossierCreated">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STATS ROW -->
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Age / Gender</div>
+                                <div class="stat-val" id="dossierAgeGender">-- / --</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Department</div>
+                                <div class="stat-val" id="dossierDept">--</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Assigned Bed</div>
+                                <div class="stat-val" id="dossierBed">None</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Total Documents</div>
+                                <div class="stat-val" id="dossierDocCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPLOAD DOCUMENT SECTION -->
+                    <div class="section-card">
+                        <div class="section-title">
+                            <h4>📤 Upload Patient Medical Document</h4>
+                            <span style="font-size: 12px; color: var(--text-muted);">Supported: PDF, Images (JPG, PNG), Word (.docx)</span>
+                        </div>
+
+                        <form id="uploadDocForm" onsubmit="handleDocUpload(event)">
+                            <input type="hidden" id="uploadPatientId" name="patient_id">
+
+                            <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('docFileInput').click()">
+                                <div class="dropzone-icon">📁</div>
+                                <div style="font-weight: 700; font-size: 15px; color: var(--navy);">Click to browse or drop medical files here</div>
+                                <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="selectedFileName">Maximum file size: 25 MB</div>
+                                <input type="file" id="docFileInput" style="display:none;" onchange="updateSelectedFile(this)" accept=".pdf,.png,.jpg,.jpeg,.docx,.doc,.txt">
+                            </div>
+
+                            <div class="upload-form-grid">
+                                <div class="form-group">
+                                    <label>Document Title *</label>
+                                    <input type="text" id="docTitleInput" placeholder="e.g. Complete Blood Count (CBC)" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Document Category *</label>
+                                    <select id="docCategoryInput" required>
+                                        <option value="Lab Report">🧪 Lab Report / Pathology</option>
+                                        <option value="Prescription">💊 Doctor Prescription</option>
+                                        <option value="Radiology & Scan">🩻 Radiology / X-Ray / MRI</option>
+                                        <option value="Discharge Summary">📋 Discharge Summary</option>
+                                        <option value="Clinical Notes">📝 Consultation / Clinical Notes</option>
+                                        <option value="ID & Insurance">🛡️ ID / Insurance Card</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Uploaded By (Staff / Doctor)</label>
+                                    <input type="text" id="docUploaderInput" placeholder="Staff Name" value="Clinical Staff">
+                                </div>
+
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label>Clinical Notes / Findings</label>
+                                    <textarea id="docNotesInput" rows="2" placeholder="Enter any doctor notes, findings, or observations..."></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="uploadSubmitBtn" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 13px;">
+                                ⬆️ Upload & Attach Document to Patient Dossier
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- ATTACHED DOCUMENTS GALLERY -->
+                    <div class="section-card">
+                        <div class="section-title">
+                            <h4>📑 Attached Documents & Records (<span id="docCountBadge">0</span>)</h4>
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" onclick="loadPatientDocuments(currentPatientId)">🔄 Refresh</button>
+                        </div>
+
+                        <div id="documentGallery" class="document-list">
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--text-muted);">No documents uploaded yet for this patient.</div>
+                        </div>
+                    </div>
+
+                    <!-- AUDIT & JOURNEY TRAIL -->
+                    <div class="section-card">
+                        <div class="section-title">
+                            <h4>⏱️ Patient Journey & Activity Log</h4>
+                            <a id="viewFullAuditLink" href="/audit" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">Full Audit History →</a>
+                        </div>
+                        <div id="journeyTimeline" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Activity items populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script>
+        let allPatients = [];
+        let currentPatientId = null;
+
+        // On Load
+        window.addEventListener("DOMContentLoaded", () => {
+            loadPatients();
+            setupDropzone();
+
+            // Auto select patient from URL query if present (e.g. ?patient=CQ0001)
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryPatient = urlParams.get("patient");
+            if (queryPatient) {
+                setTimeout(() => selectPatient(queryPatient), 600);
+            }
+        });
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById("toast");
+            toast.textContent = msg;
+            toast.style.background = isError ? "#ef4444" : "#0f172a";
+            toast.style.display = "block";
+            setTimeout(() => { toast.style.display = "none"; }, 3500);
+        }
+
+        // LOAD ALL PATIENTS
+        async function loadPatients() {
+            try {
+                const res = await fetch("/api/patients");
+                const data = await res.json();
+                if (data.success && data.patients) {
+                    allPatients = data.patients;
+                    document.getElementById("patientCount").textContent = allPatients.length;
+                    renderPatientList(allPatients);
+                }
+            } catch (err) {
+                console.error("Error loading patients:", err);
+            }
+        }
+
+        // RENDER PATIENT LIST
+        function renderPatientList(patients) {
+            const container = document.getElementById("patientListContainer");
+            if (!patients.length) {
+                container.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--text-muted);">No matching patients found.</div>`;
+                return;
+            }
+
+            container.innerHTML = patients.map(p => `
+                <div class="patient-item ${currentPatientId === p.patient_id ? 'selected' : ''}" onclick="selectPatient('${p.patient_id}')">
+                    <div class="patient-item-header">
+                        <span class="patient-id-badge">${p.patient_id}</span>
+                        <span class="status-pill status-${(p.status || '').replace(/[^a-zA-Z]/g, '')}" style="font-size: 10px; padding: 2px 7px;">${p.status || 'Registered'}</span>
+                    </div>
+                    <div class="patient-item-name">${escapeHtml(p.name)}</div>
+                    <div class="patient-item-meta">
+                        <span>${p.gender || '-'}, ${p.age || '-'} yrs</span> • 
+                        <span>${escapeHtml(p.department || 'General')}</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // FILTER PATIENT LIST
+        function filterPatients() {
+            const query = document.getElementById("patientSearchInput").value.toLowerCase().trim();
+            const filtered = allPatients.filter(p => 
+                p.patient_id.toLowerCase().includes(query) ||
+                p.name.toLowerCase().includes(query) ||
+                (p.department && p.department.toLowerCase().includes(query))
+            );
+            renderPatientList(filtered);
+        }
+
+        // SELECT PATIENT
+        async function selectPatient(patientId) {
+            currentPatientId = patientId;
+            renderPatientList(allPatients);
+
+            document.getElementById("emptySelection").style.display = "none";
+            const dossier = document.getElementById("patientDossier");
+            dossier.style.display = "flex";
+
+            document.getElementById("uploadPatientId").value = patientId;
+            document.getElementById("viewFullAuditLink").href = `/audit?patient=${patientId}`;
+
+            // Load patient basic info
+            const patient = allPatients.find(p => p.patient_id === patientId);
+            if (patient) {
+                document.getElementById("dossierName").textContent = patient.name;
+                document.getElementById("dossierId").textContent = patient.patient_id;
+                document.getElementById("dossierAvatar").textContent = patient.name.substring(0, 2).toUpperCase();
+                document.getElementById("dossierAgeGender").textContent = `${patient.age || 'N/A'} yrs / ${patient.gender || 'N/A'}`;
+                document.getElementById("dossierDept").textContent = patient.department || 'N/A';
+                document.getElementById("dossierCreated").textContent = new Date(patient.created_at || Date.now()).toLocaleDateString();
+
+                const statusPill = document.getElementById("dossierStatus");
+                statusPill.textContent = patient.status || "Registered";
+                statusPill.className = `status-pill status-${(patient.status || '').replace(/[^a-zA-Z]/g, '')}`;
+            }
+
+            // Fetch assigned bed if any
+            fetchBedInfo(patientId);
+
+            // Fetch patient documents
+            loadPatientDocuments(patientId);
+
+            // Fetch recent audit logs
+            loadPatientTimeline(patientId);
+        }
+
+        async function fetchBedInfo(patientId) {
+            try {
+                const res = await fetch("/api/beds");
+                const beds = await res.json();
+                const assigned = beds.find(b => b.patient_id === patientId && b.status === "Occupied");
+                document.getElementById("dossierBed").textContent = assigned ? `${assigned.bed_number} (${assigned.department})` : "None";
+            } catch (e) {
+                document.getElementById("dossierBed").textContent = "None";
+            }
+        }
+
+        // LOAD DOCUMENTS FOR CURRENT PATIENT
+        async function loadPatientDocuments(patientId) {
+            try {
+                const res = await fetch(`/api/documents/patient/${patientId}`);
+                const data = await res.json();
+                const gallery = document.getElementById("documentGallery");
+
+                if (data.success && data.documents && data.documents.length > 0) {
+                    document.getElementById("docCountBadge").textContent = data.documents.length;
+                    document.getElementById("dossierDocCount").textContent = data.documents.length;
+
+                    gallery.innerHTML = data.documents.map(doc => {
+                        const icon = getDocIcon(doc.document_type, doc.file_name);
+                        const fileSizeFormatted = formatBytes(doc.file_size);
+                        const dateFormatted = new Date(doc.created_at).toLocaleDateString() + ' ' + new Date(doc.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                        return `
+                            <div class="document-card">
+                                <div>
+                                    <div class="doc-top">
+                                        <div class="doc-type-icon">${icon}</div>
+                                        <div class="doc-info">
+                                            <h5>${escapeHtml(doc.document_name)}</h5>
+                                            <span class="doc-badge">${escapeHtml(doc.document_type)}</span>
+                                        </div>
+                                    </div>
+                                    ${doc.notes ? `<div class="doc-notes">"${escapeHtml(doc.notes)}"</div>` : ''}
+                                    <div class="doc-meta">
+                                        <span>👤 ${escapeHtml(doc.uploaded_by || 'Staff')}</span>
+                                        <span>${fileSizeFormatted}</span>
+                                    </div>
+                                    <div class="doc-meta" style="font-size: 10px; color: #94a3b8; margin-top: 3px;">
+                                        <span>📅 ${dateFormatted}</span>
+                                    </div>
+                                </div>
+                                <div class="doc-actions">
+                                    <a href="${doc.file_path}" target="_blank" class="doc-btn">👁️ View</a>
+                                    <a href="${doc.file_path}" download="${doc.file_name}" class="doc-btn">⬇️ Save</a>
+                                    <button class="doc-btn danger" onclick="deleteDocument(${doc.id})">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join("");
+                } else {
+                    document.getElementById("docCountBadge").textContent = "0";
+                    document.getElementById("dossierDocCount").textContent = "0";
+                    gallery.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
+                        <p>No documents uploaded yet for patient ${patientId}.</p>
+                        <small>Use the upload box above to attach lab reports, scans, or prescriptions.</small>
+                    </div>`;
+                }
+            } catch (err) {
+                console.error("Error loading patient documents:", err);
+            }
+        }
+
+        // LOAD TIMELINE
+        async function loadPatientTimeline(patientId) {
+            try {
+                const res = await fetch(`/api/audit/patient/${patientId}`);
+                const data = await res.json();
+                const container = document.getElementById("journeyTimeline");
+
+                if (data.success && data.logs && data.logs.length > 0) {
+                    container.innerHTML = data.logs.slice(-5).reverse().map(log => `
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border:1px solid #edf2f7; padding: 10px 14px; border-radius: 10px; font-size: 13px;">
+                            <div>
+                                <strong style="color:var(--navy);">${escapeHtml(log.action)}</strong>
+                                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+                                    By: ${escapeHtml(log.performed_by || 'Staff')} • Dept: ${escapeHtml(log.department || 'N/A')}
+                                </div>
+                            </div>
+                            <span style="font-size: 11px; color: #94a3b8;">${new Date(log.created_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+                        </div>
+                    `).join("");
+                } else {
+                    container.innerHTML = `<div style="font-size: 12px; color: var(--text-muted);">No journey activity recorded yet.</div>`;
+                }
+            } catch (e) {}
+        }
+
+        // DROPZONE SETUP
+        function setupDropzone() {
+            const dropzone = document.getElementById("dropzone");
+            ["dragenter", "dragover"].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add("dragover");
+                }, false);
+            });
+            ["dragleave", "drop"].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove("dragover");
+                }, false);
+            });
+            dropzone.addEventListener("drop", (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length) {
+                    const input = document.getElementById("docFileInput");
+                    input.files = files;
+                    updateSelectedFile(input);
+                }
+            });
+        }
+
+        function updateSelectedFile(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById("selectedFileName").innerHTML = `Selected: <strong>${escapeHtml(file.name)}</strong> (${formatBytes(file.size)})`;
+                if (!document.getElementById("docTitleInput").value) {
+                    // Auto-fill title from filename
+                    const clean = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+                    document.getElementById("docTitleInput").value = clean;
+                }
+            }
+        }
+
+        // HANDLE DOCUMENT UPLOAD
+        async function handleDocUpload(e) {
+            e.preventDefault();
+            if (!currentPatientId) {
+                showToast("Please select a patient first.", true);
+                return;
+            }
+
+            const fileInput = document.getElementById("docFileInput");
+            if (!fileInput.files || !fileInput.files[0]) {
+                showToast("Please choose or drag a file to upload.", true);
+                return;
+            }
+
+            const btn = document.getElementById("uploadSubmitBtn");
+            btn.disabled = true;
+            btn.textContent = "⏳ Uploading Document...";
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("patient_id", currentPatientId);
+            formData.append("document_name", document.getElementById("docTitleInput").value);
+            formData.append("document_type", document.getElementById("docCategoryInput").value);
+            formData.append("uploaded_by", document.getElementById("docUploaderInput").value);
+            formData.append("notes", document.getElementById("docNotesInput").value);
+
+            try {
+                const res = await fetch("/api/documents/upload", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast("✅ Document attached to patient successfully!");
+                    // Reset form
+                    document.getElementById("uploadDocForm").reset();
+                    document.getElementById("selectedFileName").textContent = "Maximum file size: 25 MB";
+                    // Reload documents
+                    loadPatientDocuments(currentPatientId);
+                    loadPatientTimeline(currentPatientId);
+                } else {
+                    showToast(data.message || "Upload failed", true);
+                }
+            } catch (err) {
+                showToast("Network error uploading document", true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "⬆️ Upload & Attach Document to Patient Dossier";
+            }
+        }
+
+        // DELETE DOCUMENT
+        async function deleteDocument(docId) {
+            if (!confirm("Are you sure you want to delete this document?")) return;
+
+            try {
+                const res = await fetch(`/api/documents/${docId}`, { method: "DELETE" });
+                const data = await res.json();
+                if (data.success) {
+                    showToast("Document removed successfully.");
+                    loadPatientDocuments(currentPatientId);
+                } else {
+                    showToast(data.message || "Delete failed", true);
+                }
+            } catch (e) {
+                showToast("Error deleting document", true);
+            }
+        }
+
+        // HELPERS
+        function getDocIcon(type, filename) {
+            if (type.includes("Lab")) return "🧪";
+            if (type.includes("Prescription")) return "💊";
+            if (type.includes("Radio") || type.includes("Scan")) return "🩻";
+            if (type.includes("Discharge")) return "📋";
+            if (type.includes("ID") || type.includes("Insurance")) return "🛡️";
+            if (filename && filename.endsWith(".pdf")) return "📕";
+            if (filename && filename.match(/\.(jpg|png|jpeg)$/i)) return "🖼️";
+            return "📄";
+        }
+
+        function formatBytes(bytes) {
+            if (!bytes || bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+        }
+    </script>
+</body>
+</html>

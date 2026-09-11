@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ - Audit History</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #0f766e;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-buttons button {
+            border: none;
+            padding: 10px 16px;
+            margin-left: 8px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .search-box label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* ================= PATIENT LIST ================= */
+
+        .patients-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .patient-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            cursor: pointer;
+        }
+
+        .patient-card:hover {
+            background: #f0fdfa;
+        }
+
+        .patient-id {
+            font-weight: bold;
+            color: #0f766e;
+        }
+
+        .patient-name {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .patient-info {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .status {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: #e2e8f0;
+        }
+
+        /* ================= HISTORY ================= */
+
+        #historySection {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .history-header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .history-header h2 {
+            margin-top: 0;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .detail-title {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* ================= TIMELINE ================= */
+
+        .timeline {
+            background: white;
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 25px 30px;
+            border-left: 2px solid #cbd5e1;
+        }
+
+        .timeline-item:last-child {
+            border-left: none;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -7px;
+            top: 2px;
+
+            width: 12px;
+            height: 12px;
+
+            background: #0f766e;
+            border-radius: 50%;
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .timeline-action {
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .timeline-details {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        .back-button {
+            margin-top: 15px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .patient-card {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        🏥 CareQ Audit Trail
+    </div>
+
+    <div class="header-buttons">
+        <button onclick="window.location.href='/queue'">📋 Queue</button>
+        <button onclick="window.location.href='/beds'">🛏️ Beds</button>
+        <button onclick="window.location.href='/reports'">📑 Reports</button>
+        <button onclick="goDashboard()">📊 Dashboard</button>
+        <button onclick="loadPatients()">🔄 Refresh</button>
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+    <h1>
+        Audit History
+    </h1>
+
+    <p class="subtitle">
+        Complete patient journey and hospital activity history
+    </p>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-box">
+
+        <label>
+            🔎 Search Patient ID
+        </label>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Example: CQ0005"
+            oninput="searchPatients()"
+        >
+
+    </div>
+
+
+    <!-- ================= PATIENT LIST ================= -->
+
+    <div class="patients-section">
+
+        <h2>
+            All Patients
+        </h2>
+
+        <div id="patientList">
+
+            <div class="message">
+                Loading patients...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= HISTORY ================= -->
+
+    <div id="historySection">
+
+        <div class="history-header">
+
+            <h2 id="historyTitle">
+                Patient History
+            </h2>
+
+            <div class="details">
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Patient ID
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="historyPatientId">
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Patient Name
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="historyPatientName">
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Department
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="historyDepartment">
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Joined Hospital
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="joinedTime">
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Left Hospital
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="leftTime">
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-title">
+                        Total Stay
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="totalStay">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= TIMELINE ================= -->
+
+        <div class="timeline">
+
+            <h2>
+                Patient Journey
+            </h2>
+
+            <div id="timeline">
+
+                <div class="message">
+                    Loading history...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// =====================================================
+// LOGIN / ADMIN CHECK
+// =====================================================
+
+const user =
+    JSON.parse(
+        localStorage.getItem("careqUser")
+    );
+
+
+if (!user) {
+
+    alert("Please login first.");
+
+    window.location.href =
+        "/pages/login.html";
+
+}
+
+
+// =====================================================
+// ADMIN ONLY
+// =====================================================
+
+if (
+    user &&
+    user.role.toLowerCase() !== "admin"
+) {
+
+    alert(
+        "Access denied. Audit History is available only to Admin."
+    );
+
+    window.location.href =
+        "/pages/dashboard.html";
+
+}
+
+
+// =====================================================
+// DASHBOARD
+// =====================================================
+
+function goDashboard() {
+
+    window.location.href =
+        "/pages/dashboard.html";
+
+}
+
+
+// =====================================================
+// GLOBAL PATIENT DATA
+// =====================================================
+
+let patients = [];
+
+
+// =====================================================
+// LOAD PATIENTS
+// =====================================================
+
+async function loadPatients() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/patients"
+            );
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                "Unable to load patients"
+            );
+
+        }
+
+
+        patients =
+            data.patients;
+
+
+        displayPatients(
+            patients
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "patientList"
+        ).innerHTML = `
+
+            <div class="message">
+                Unable to load patients.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// DISPLAY PATIENTS
+// =====================================================
+
+function displayPatients(
+    patientData
+) {
+
+    const list =
+        document.getElementById(
+            "patientList"
+        );
+
+
+    if (
+        patientData.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="message">
+                No patients found.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        patientData.map(
+            patient => `
+
+                <div
+                    class="patient-card"
+                    onclick="openHistory('${patient.patient_id}')"
+                >
+
+                    <div>
+
+                        <div class="patient-id">
+                            ${patient.patient_id}
+                        </div>
+
+                        <div class="patient-name">
+                            ${patient.name}
+                        </div>
+
+                        <div class="patient-info">
+                            ${patient.age} years
+                            • ${patient.gender}
+                            • ${patient.department}
+                        </div>
+
+                    </div>
+
+
+                    <div class="status">
+                        ${patient.status}
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+// =====================================================
+// SEARCH PATIENTS
+// =====================================================
+
+function searchPatients() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const filtered =
+        patients.filter(
+            patient =>
+
+                patient.patient_id
+                    .toLowerCase()
+                    .includes(search)
+
+        );
+
+
+    displayPatients(
+        filtered
+    );
+
+}
+
+
+// =====================================================
+// OPEN PATIENT HISTORY
+// =====================================================
+
+async function openHistory(
+    patientId
+) {
+
+    const patient =
+        patients.find(
+            p =>
+                p.patient_id ===
+                patientId
+        );
+
+
+    if (!patient) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "historySection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "historyTitle"
+    ).innerText =
+        `${patient.name} — Patient History`;
+
+
+    document.getElementById(
+        "historyPatientId"
+    ).innerText =
+        patient.patient_id;
+
+
+    document.getElementById(
+        "historyPatientName"
+    ).innerText =
+        patient.name;
+
+
+    document.getElementById(
+        "historyDepartment"
+    ).innerText =
+        patient.department;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/audit/patient/${patientId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                "Unable to load history"
+            );
+
+        }
+
+
+        displayHistory(
+            patient,
+            data.logs
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "timeline"
+        ).innerHTML = `
+
+            <div class="message">
+                Unable to load patient history.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// DISPLAY HISTORY
+// =====================================================
+
+function displayHistory(
+    patient,
+    logs
+) {
+
+    const timeline =
+        document.getElementById(
+            "timeline"
+        );
+
+
+    if (
+        !logs ||
+        logs.length === 0
+    ) {
+
+        timeline.innerHTML = `
+
+            <div class="message">
+                No history available for this patient yet.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // ================================================
+    // JOIN TIME
+    // ================================================
+
+    const firstLog =
+        logs[0];
+
+
+    const joined =
+        new Date(
+            firstLog.created_at
+        );
+
+
+    document.getElementById(
+        "joinedTime"
+    ).innerText =
+        formatDateTime(joined);
+
+
+    // ================================================
+    // LEFT TIME
+    // ================================================
+
+    const dischargeLog =
+        [...logs]
+        .reverse()
+        .find(
+            log =>
+                log.new_status ===
+                "Discharge"
+        );
+
+
+    if (dischargeLog) {
+
+        const left =
+            new Date(
+                dischargeLog.created_at
+            );
+
+        document.getElementById(
+            "leftTime"
+        ).innerText =
+            formatDateTime(left);
+
+
+        const stay =
+            left - joined;
+
+
+        document.getElementById(
+            "totalStay"
+        ).innerText =
+            formatDuration(stay);
+
+    } else {
+
+        document.getElementById(
+            "leftTime"
+        ).innerText =
+            "Still in hospital";
+
+
+        document.getElementById(
+            "totalStay"
+        ).innerText =
+            "Currently admitted";
+
+    }
+
+
+    // ================================================
+    // TIMELINE
+    // ================================================
+
+    timeline.innerHTML =
+        logs.map(
+            log => {
+
+                const date =
+                    new Date(
+                        log.created_at
+                    );
+
+
+                return `
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot">
+                        </div>
+
+                        <div class="timeline-time">
+
+                            ${formatDateTime(date)}
+
+                        </div>
+
+                        <div class="timeline-action">
+
+                            ${log.action}
+
+                        </div>
+
+                        <div class="timeline-details">
+
+                            ${log.previous_status
+                                ? `Previous:
+                                   ${log.previous_status}<br>`
+                                : ""}
+
+                            ${log.new_status
+                                ? `New:
+                                   ${log.new_status}<br>`
+                                : ""}
+
+                            Department:
+                            ${log.department || "—"}
+
+                            <br>
+
+                            Performed by:
+                            ${log.performed_by || "System"}
+
+                            ${log.performed_role
+                                ? `(${log.performed_role})`
+                                : ""}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+// =====================================================
+// FORMAT DATE & TIME
+// =====================================================
+
+function formatDateTime(
+    date
+) {
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        }
+    );
+
+}
+
+
+// =====================================================
+// FORMAT STAY
+// =====================================================
+
+function formatDuration(
+    milliseconds
+) {
+
+    const totalMinutes =
+        Math.floor(
+            milliseconds /
+            60000
+        );
+
+
+    const days =
+        Math.floor(
+            totalMinutes / 1440
+        );
+
+
+    const hours =
+        Math.floor(
+            (totalMinutes % 1440) / 60
+        );
+
+
+    const minutes =
+        totalMinutes % 60;
+
+
+    let result = "";
+
+
+    if (days > 0) {
+
+        result +=
+            `${days}d `;
+
+    }
+
+
+    if (hours > 0) {
+
+        result +=
+            `${hours}h `;
+
+    }
+
+
+    result +=
+        `${minutes}m`;
+
+
+    return result;
+
+}
+
+
+// =====================================================
+// LOAD ON PAGE OPEN
+// =====================================================
+
+loadPatients();
+
+</script>
+
+</body>
+
+</html>

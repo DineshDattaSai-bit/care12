@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ - Patient Queue</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fb;
+
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #087ea4;
+        }
+
+
+        .header-buttons {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .header-button {
+
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #087ea4;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        .header-button:hover {
+
+            background: #066982;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        main {
+
+            max-width: 1400px;
+
+            margin: auto;
+
+            padding: 30px;
+        }
+
+
+        .page-title {
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-title h1 {
+
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .page-title p {
+
+            color: #777;
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================== */
+
+        .message {
+
+            display: none;
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border-radius: 8px;
+
+            background: #e9f7ef;
+
+            color: #176b3a;
+        }
+
+
+        .error {
+
+            display: none;
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border-radius: 8px;
+
+            background: #ffecec;
+
+            color: #b00020;
+        }
+
+
+        /* =========================
+           TABLE CONTAINER
+        ========================== */
+
+        .table-card {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.06);
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 800px;
+        }
+
+
+        th {
+
+            text-align: left;
+
+            background: #eef7fa;
+
+            padding: 14px;
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+
+        td {
+
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+        }
+
+
+        tr:hover {
+
+            background: #fafcfd;
+        }
+
+
+        /* =========================
+           PATIENT ID
+        ========================== */
+
+        .patient-id {
+
+            font-weight: bold;
+
+            color: #087ea4;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        select {
+
+            padding: 8px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            background: white;
+
+            cursor: pointer;
+        }
+
+
+        .update-button {
+
+            padding: 8px 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #087ea4;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        .update-button:hover {
+
+            background: #066982;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================== */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            header {
+
+                padding: 0 15px;
+            }
+
+
+            main {
+
+                padding: 20px 15px;
+            }
+
+
+            .logo {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================== -->
+
+<header>
+
+    <div class="logo" style="display:flex; align-items:center; gap: 8px;">
+        <span style="background:#087ea4; color:white; border-radius:8px; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; font-size:18px;">+</span>
+        CareQ Queue
+    </div>
+
+    <div class="header-buttons">
+        <button class="header-button" onclick="window.location.href='/patients'">+ Register Patient</button>
+        <button class="header-button" onclick="window.location.href='/beds'">🛏️ Beds</button>
+        <button class="header-button" onclick="window.location.href='/reports'">📑 Reports</button>
+        <button class="header-button" onclick="window.location.href='/dashboard'">📊 Dashboard</button>
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================== -->
+
+<main>
+
+
+    <div class="page-title">
+
+        <h1>
+            Patient Queue Management
+        </h1>
+
+        <p>
+            Track patients and update their
+            current journey stage.
+        </p>
+
+    </div>
+
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    <div
+        class="message"
+        id="successMessage">
+
+    </div>
+
+
+
+    <!-- ERROR MESSAGE -->
+
+    <div
+        class="error"
+        id="errorMessage">
+
+    </div>
+
+
+
+    <!-- =========================
+         PATIENT TABLE
+    ========================== -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Patient ID
+                    </th>
+
+                    <th>
+                        Patient Name
+                    </th>
+
+                    <th>
+                        Age
+                    </th>
+
+                    <th>
+                        Gender
+                    </th>
+
+                    <th>
+                        Department
+                    </th>
+
+                    <th>
+                        Current Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="patientTableBody">
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty">
+
+                        Loading patients...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+// ===============================
+// LOGIN CHECK
+// ===============================
+
+const storedUser =
+    localStorage.getItem("careqUser");
+
+
+if (!storedUser) {
+
+    window.location.href =
+        "/pages/login.html";
+
+}
+
+
+
+// ===============================
+// LOAD PATIENTS
+// ===============================
+
+async function loadPatients() {
+
+    try {
+
+        const response =
+            await fetch("/api/patients");
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load patients"
+            );
+
+        }
+
+
+        displayPatients(
+            data.patients
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showError(
+            "Unable to load patients."
+        );
+
+    }
+
+}
+
+
+
+// ===============================
+// DISPLAY PATIENTS
+// ===============================
+
+function displayPatients(patients) {
+
+    const tableBody =
+        document.getElementById(
+            "patientTableBody"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    if (
+        !patients ||
+        patients.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="empty">
+
+                    No patients registered yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    patients.forEach(
+        function(patient) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    <span class="patient-id">
+                        ${patient.patient_id}
+                    </span>
+                </td>
+
+                <td>
+                    ${patient.name}
+                </td>
+
+                <td>
+                    ${patient.age}
+                </td>
+
+                <td>
+                    ${patient.gender}
+                </td>
+
+                <td>
+                    ${patient.department}
+                </td>
+
+                <td>
+
+                    <select
+                        id="status-${patient.patient_id}">
+
+                        <option value="Registered"
+                            ${patient.status === "Registered" ? "selected" : ""}>
+                            Registered
+                        </option>
+
+                        <option value="Waiting"
+                            ${patient.status === "Waiting" ? "selected" : ""}>
+                            Waiting
+                        </option>
+
+                        <option value="Consultation"
+                            ${patient.status === "Consultation" ? "selected" : ""}>
+                            Consultation
+                        </option>
+
+                        <option value="Diagnostics"
+                            ${patient.status === "Diagnostics" ? "selected" : ""}>
+                            Diagnostics
+                        </option>
+
+                        <option value="Treatment / Observation"
+                            ${patient.status === "Treatment / Observation" ? "selected" : ""}>
+                            Treatment / Observation
+                        </option>
+
+                        <option value="Discharge"
+                            ${patient.status === "Discharge" ? "selected" : ""}>
+                            Discharge
+                        </option>
+
+                    </select>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="update-button"
+                        onclick="
+                            updateStatus(
+                                '${patient.patient_id}'
+                            )
+                        ">
+
+                        Update
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+
+// ===============================
+// UPDATE STATUS
+// ===============================
+
+async function updateStatus(patientId) {
+
+    const select =
+        document.getElementById(
+            `status-${patientId}`
+        );
+
+
+    const status =
+        select.value;
+
+
+    // Get logged-in user
+
+    const user =
+        JSON.parse(
+            localStorage.getItem(
+                "careqUser"
+            )
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/patients/${patientId}/status`,
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        status: status,
+
+                        updatedBy:
+                            user.name
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "Status update failed"
+            );
+
+        }
+
+
+        showSuccess(
+            `${patientId} status updated to ${status}`
+        );
+
+
+        // Reload patients
+
+        loadPatients();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showError(
+            error.message ||
+            "Unable to update patient status"
+        );
+
+    }
+
+}
+
+
+
+// ===============================
+// SUCCESS MESSAGE
+// ===============================
+
+function showSuccess(message) {
+
+    const box =
+        document.getElementById(
+            "successMessage"
+        );
+
+
+    box.innerText =
+        message;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            box.style.display =
+                "none";
+
+        },
+        3000
+    );
+
+}
+
+
+
+// ===============================
+// ERROR MESSAGE
+// ===============================
+
+function showError(message) {
+
+    const box =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    box.innerText =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+
+// ===============================
+// LOAD ON PAGE OPEN
+// ===============================
+
+loadPatients();
+
+
+</script>
+
+
+</body>
+
+</html>

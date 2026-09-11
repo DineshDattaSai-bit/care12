@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareQ - Departments</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f8fb;
+            color: #333;
+        }
+
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #087ea4;
+        }
+
+
+        .header-button {
+            padding: 9px 15px;
+            border: none;
+            border-radius: 7px;
+            background: #087ea4;
+            color: white;
+            cursor: pointer;
+        }
+
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+
+        .title h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+
+        .title p {
+            color: #777;
+        }
+
+
+        .message {
+            display: none;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #e9f7ef;
+            color: #176b3a;
+        }
+
+
+        .error {
+            display: none;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #ffecec;
+            color: #b00020;
+        }
+
+
+        /* =========================
+           ADD DEPARTMENT
+        ========================== */
+
+        .add-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+        }
+
+
+        .add-card h2 {
+            margin-bottom: 15px;
+            font-size: 19px;
+        }
+
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            outline: none;
+        }
+
+
+        input:focus {
+            border-color: #087ea4;
+        }
+
+
+        /* =========================
+           SUGGESTIONS
+        ========================== */
+
+        .suggestions {
+
+            position: absolute;
+
+            top: 48px;
+
+            left: 0;
+
+            right: 0;
+
+            background: white;
+
+            border: 1px solid #ddd;
+
+            border-radius: 7px;
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.10);
+
+            max-height: 220px;
+
+            overflow-y: auto;
+
+            display: none;
+
+            z-index: 10;
+        }
+
+
+        .suggestion {
+
+            padding: 11px 13px;
+
+            cursor: pointer;
+
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+
+        .suggestion:last-child {
+            border-bottom: none;
+        }
+
+
+        .suggestion:hover {
+
+            background: #eef7fa;
+
+            color: #087ea4;
+        }
+
+
+        .add-button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            background: #087ea4;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+
+        .add-button:hover {
+            background: #066982;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        th {
+            text-align: left;
+            padding: 14px;
+            background: #eef7fa;
+            color: #555;
+        }
+
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .waiting {
+
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            background: #eef7fa;
+
+            color: #087ea4;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .delete-button {
+
+            padding: 7px 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #d9534f;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        .empty {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 15px;
+            }
+
+
+            main {
+                padding: 20px 15px;
+            }
+
+
+            .form-row {
+                flex-direction: column;
+            }
+
+
+            .add-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo" style="display:flex; align-items:center; gap: 8px;">
+        <span style="background:#087ea4; color:white; border-radius:8px; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; font-size:18px;">+</span>
+        CareQ Departments
+    </div>
+
+    <div style="display:flex; gap: 10px; align-items: center;">
+        <button class="header-button" onclick="window.location.href='/queue'">📋 Queue</button>
+        <button class="header-button" onclick="window.location.href='/beds'">🛏️ Beds</button>
+        <button class="header-button" onclick="window.location.href='/reports'">📑 Reports</button>
+        <button class="header-button" onclick="window.location.href='/dashboard'">📊 Dashboard</button>
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+    <div class="title">
+
+        <h1>
+            Department Management
+        </h1>
+
+
+        <p>
+            Search and manage hospital
+            departments and monitor waiting queues.
+        </p>
+
+    </div>
+
+
+
+    <div
+        class="message"
+        id="successMessage">
+    </div>
+
+
+    <div
+        class="error"
+        id="errorMessage">
+    </div>
+
+
+
+    <!-- =========================
+         ADD DEPARTMENT
+    ========================== -->
+
+    <div class="add-card">
+
+        <h2>
+            Add New Department
+        </h2>
+
+
+        <div class="form-row">
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="departmentName"
+                    placeholder="Search department..."
+                    autocomplete="off">
+
+
+                <!-- SUGGESTIONS -->
+
+                <div
+                    class="suggestions"
+                    id="suggestions">
+                </div>
+
+            </div>
+
+
+
+            <button
+                class="add-button"
+                onclick="addDepartment()">
+
+                + Add Department
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         DEPARTMENT TABLE
+    ========================== -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Department
+                    </th>
+
+                    <th>
+                        Waiting Patients
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="departmentTableBody">
+
+                <tr>
+
+                    <td
+                        colspan="3"
+                        class="empty">
+
+                        Loading departments...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+// ===============================
+// LOGIN CHECK
+// ===============================
+
+const storedUser =
+    localStorage.getItem("careqUser");
+
+
+if (!storedUser) {
+
+    window.location.href =
+        "/pages/login.html";
+
+}
+
+
+
+// ===============================
+// COMMON DEPARTMENTS
+// ===============================
+
+const departmentList = [
+
+    "General Medicine",
+
+    "Cardiology",
+
+    "Cardiac Surgery",
+
+    "Neurology",
+
+    "Neurosurgery",
+
+    "Nephrology",
+
+    "Urology",
+
+    "Orthopedics",
+
+    "Pediatrics",
+
+    "Neonatology",
+
+    "Gynecology",
+
+    "Obstetrics",
+
+    "Dermatology",
+
+    "Ophthalmology",
+
+    "ENT",
+
+    "Pulmonology",
+
+    "Gastroenterology",
+
+    "Endocrinology",
+
+    "Oncology",
+
+    "Psychiatry",
+
+    "Radiology",
+
+    "Pathology",
+
+    "Emergency",
+
+    "ICU",
+
+    "Diagnostics",
+
+    "Dental",
+
+    "Physiotherapy",
+
+    "General Surgery",
+
+    "Plastic Surgery",
+
+    "Anesthesiology",
+
+    "Infectious Disease"
+
+];
+
+
+
+// ===============================
+// SEARCH ELEMENTS
+// ===============================
+
+const departmentInput =
+    document.getElementById(
+        "departmentName"
+    );
+
+
+const suggestionsBox =
+    document.getElementById(
+        "suggestions"
+    );
+
+
+
+// ===============================
+// SHOW SUGGESTIONS
+// ===============================
+
+departmentInput.addEventListener(
+    "input",
+    function() {
+
+        const search =
+            departmentInput.value
+                .trim()
+                .toLowerCase();
+
+
+        suggestionsBox.innerHTML = "";
+
+
+        if (!search) {
+
+            suggestionsBox.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        const matches =
+            departmentList.filter(
+                function(department) {
+
+                    return department
+                        .toLowerCase()
+                        .includes(search);
+
+                }
+            );
+
+
+        if (matches.length === 0) {
+
+            suggestionsBox.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        matches.forEach(
+            function(department) {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "suggestion";
+
+
+                item.innerText =
+                    department;
+
+
+                item.onclick =
+                    function() {
+
+                        departmentInput.value =
+                            department;
+
+
+                        suggestionsBox.style.display =
+                            "none";
+
+                    };
+
+
+                suggestionsBox.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        suggestionsBox.style.display =
+            "block";
+
+    }
+);
+
+
+
+// ===============================
+// CLOSE SUGGESTIONS
+// ===============================
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !event.target.closest(
+                ".search-box"
+            )
+        ) {
+
+            suggestionsBox.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+
+// ===============================
+// LOAD DEPARTMENTS
+// ===============================
+
+async function loadDepartments() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/departments"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message
+            );
+
+        }
+
+
+        displayDepartments(
+            data.departments
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            "Unable to load departments."
+        );
+
+    }
+
+}
+
+
+
+// ===============================
+// DISPLAY DEPARTMENTS
+// ===============================
+
+function displayDepartments(
+    departments
+) {
+
+    const tableBody =
+        document.getElementById(
+            "departmentTableBody"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    if (
+        !departments ||
+        departments.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="3"
+                    class="empty">
+
+                    No departments added yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    departments.forEach(
+        function(department) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <strong>
+                        ${department.name}
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    <span class="waiting">
+
+                        ${department.waiting}
+                        waiting
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="delete-button"
+                        onclick="
+                            deleteDepartment(
+                                ${department.id}
+                            )
+                        ">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+
+// ===============================
+// ADD DEPARTMENT
+// ===============================
+
+async function addDepartment() {
+
+    const name =
+        departmentInput.value.trim();
+
+
+    if (!name) {
+
+        showError(
+            "Please search and select a department."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/departments",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message
+            );
+
+        }
+
+
+        departmentInput.value = "";
+
+
+        suggestionsBox.style.display =
+            "none";
+
+
+        showSuccess(
+            "Department added successfully."
+        );
+
+
+        loadDepartments();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            error.message ||
+            "Unable to add department."
+        );
+
+    }
+
+}
+
+
+
+// ===============================
+// DELETE DEPARTMENT
+// ===============================
+
+async function deleteDepartment(id) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this department?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/departments/${id}`,
+                {
+
+                    method: "DELETE"
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message
+            );
+
+        }
+
+
+        showSuccess(
+            "Department deleted successfully."
+        );
+
+
+        loadDepartments();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            error.message ||
+            "Unable to delete department."
+        );
+
+    }
+
+}
+
+
+
+// ===============================
+// SUCCESS MESSAGE
+// ===============================
+
+function showSuccess(message) {
+
+    const box =
+        document.getElementById(
+            "successMessage"
+        );
+
+
+    const errorBox =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    errorBox.style.display =
+        "none";
+
+
+    box.innerText =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+
+// ===============================
+// ERROR MESSAGE
+// ===============================
+
+function showError(message) {
+
+    const box =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    const successBox =
+        document.getElementById(
+            "successMessage"
+        );
+
+
+    successBox.style.display =
+        "none";
+
+
+    box.innerText =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+
+// ===============================
+// LOAD PAGE
+// ===============================
+
+loadDepartments();
+
+
+</script>
+
+
+</body>
+
+</html>
