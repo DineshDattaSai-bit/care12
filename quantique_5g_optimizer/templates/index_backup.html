@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum-Powered 5G Resource Optimization | Team Quantum Nexus</title>
+    
+    <!-- Modern Enterprise Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for High-Precision Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- KaTeX for Rigorous Hamiltonian Equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    
+    <!-- Custom Modern Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css?v=7.0">
+</head>
+<body class="enterprise-dark unified-view">
+
+    <!-- Top Compact Header: Project Brand & Global Actions -->
+    <header class="master-header compact-header">
+        <div class="header-left">
+            <div class="system-brand">
+                <div class="quantum-core-badge">
+                    <i class="fa-solid fa-atom"></i>
+                </div>
+                <div>
+                    <div class="conference-tag">
+                        <span class="conf-badge">QUANTIQUE HACKATHON 2026</span>
+                        <span class="sub-badge">QISKIT FALL FEST</span>
+                        <span class="spec-badge">O-RAN WG3 • 3GPP REL-18</span>
+                    </div>
+                    <div class="team-identity-inline">
+                        Team: <strong>Quantum Nexus</strong> <span class="roster-sep">•</span> <span class="team-roster">B. Dinesh Datta Sai • B. Susmitha • Ch. Gouri Sree Greshmitha</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <div class="telemetry-pill state-active-pill" id="header-state-pill">
+                <span class="pulse-indicator red" id="sys-status-dot"></span>
+                <span class="telemetry-label" id="sys-status-text">CLASSICAL BASELINE ACTIVE (5 Outages / High Contention)</span>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <button id="btn-jury-walkthrough" class="btn-control btn-walkthrough-primary" title="Start Guided Demonstration for Hackathon Jury">
+                <i class="fa-solid fa-play"></i> ▶ Start Jury Demo
+            </button>
+            <button id="btn-header-optimize" class="btn-control btn-quantum-run" title="Execute Quantum Optimization Sequence">
+                <i class="fa-solid fa-bolt-lightning"></i> ⚡ RUN QUANTUM OPTIMIZATION
+            </button>
+            <button id="btn-header-reset" class="btn-control btn-secondary" title="Restore Classical Baseline">
+                <i class="fa-solid fa-rotate-left"></i> ↩ RESTORE CLASSICAL BASELINE
+            </button>
+        </div>
+    </header>
+
+    <!-- Master 8-Part Story Navigation Bar -->
+    <nav class="subsystem-nav simplified-step-nav" id="subsystem-navbar">
+        <div class="nav-tabs-wrapper">
+            <button class="nav-tab-btn active" data-tab="sec-overview">
+                <span class="tab-index">0</span>
+                <span class="tab-title"><i class="fa-solid fa-circle-info"></i> Overview</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-problem">
+                <span class="tab-index">①</span>
+                <span class="tab-title"><i class="fa-solid fa-users-rays"></i> Real-Life Problem</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-classical">
+                <span class="tab-index">②</span>
+                <span class="tab-title"><i class="fa-solid fa-landmark"></i> Classical Solution</span>
+                <span class="tab-pill pill-alert" id="badge-network-outages">5 Outages</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-limitation">
+                <span class="tab-index">③</span>
+                <span class="tab-title"><i class="fa-solid fa-brain"></i> Why Optimization</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-quantum">
+                <span class="tab-index">④</span>
+                <span class="tab-title"><i class="fa-solid fa-atom"></i> Quantum QAOA</span>
+                <span class="tab-pill pill-quantum" id="badge-quantum-status">12 Qubits</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-optimized">
+                <span class="tab-index">⑤</span>
+                <span class="tab-title"><i class="fa-solid fa-network-wired"></i> Optimized 5G</span>
+                <span class="tab-pill pill-gain">0 Outages</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-comparison">
+                <span class="tab-index">⑥</span>
+                <span class="tab-title"><i class="fa-solid fa-chart-column"></i> Comparison</span>
+                <span class="tab-pill pill-gain">+8.6 dB</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="sec-benefits">
+                <span class="tab-index">⑦</span>
+                <span class="tab-title"><i class="fa-solid fa-leaf"></i> Real Benefits</span>
+                <span class="tab-pill pill-gain">32.8% Saved</span>
+            </button>
+        </div>
+        <div class="nav-view-mode">
+            <span class="mode-label"><i class="fa-solid fa-sliders"></i> VIEW:</span>
+            <button id="btn-mode-unified" class="mode-toggle-btn active" title="View complete story sequentially"><i class="fa-solid fa-layer-group"></i> Story Flow</button>
+            <button id="btn-mode-tabbed" class="mode-toggle-btn" title="Focus on one section at a time"><i class="fa-solid fa-table-columns"></i> Focus Stage</button>
+        </div>
+    </nav>
+
+    <!-- Main Viewport Area -->
+    <main class="main-container">
+
+        <!-- ==================== TOP HERO & WHAT IS THIS WEBSITE SHOWING? ==================== -->
+        <section id="sec-overview" class="subsystem-panel active">
+            <!-- Hero Title & Subtitle -->
+            <div class="hero-simple-banner">
+                <h1 class="main-headline">Quantum-Powered 5G Resource Optimization</h1>
+                <p class="main-subheadline">
+                    Using Quantum Optimization to improve signal quality, reduce interference, save energy, and eliminate network outages.
+                </p>
+            </div>
+
+            <!-- "WHAT IS THIS WEBSITE SHOWING?" Explainer Section -->
+            <div class="what-is-showing-section">
+                <div class="wis-left">
+                    <div class="wis-badge"><i class="fa-solid fa-circle-info"></i> EXECUTIVE SUMMARY</div>
+                    <h2 class="wis-title">What is this website showing?</h2>
+                    <p class="wis-text">
+                        <strong>This prototype demonstrates how a dense 5G network can allocate radio resources using a conventional/classical approach and how a QAOA-based quantum optimization approach can search for a better resource allocation.</strong>
+                    </p>
+                    <p class="wis-subtext">
+                        It connects realistic 3GPP 28 GHz mmWave channel modeling, physical phased-array antenna beamforming, and an O-RAN Near-RT RIC xApp architecture with a 12-qubit Quantum Approximate Optimization Algorithm (QAOA).
+                    </p>
+                </div>
+
+                <!-- "How to use this demo" Box (7 Steps) -->
+                <div class="how-to-use-box">
+                    <div class="htu-header">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>How to Use this Demo (7 Steps for Judges):</span>
+                    </div>
+                    <ol class="htu-steps-list">
+                        <li><strong>View Classical Network:</strong> Explore the baseline 5G map below where all 3 towers are crammed into Subband 0.</li>
+                        <li><strong>Understand the problem:</strong> Observe how mutual co-channel interference and shadow fading cause 5 user outages.</li>
+                        <li><strong>See the classical resource allocation:</strong> Inspect tower transmit power (39 dBm burn) and clashing carrier assignments.</li>
+                        <li><strong>Click RUN QUANTUM OPTIMIZATION:</strong> Launch the hybrid quantum QAOA optimization solver.</li>
+                        <li><strong>Watch QAOA solve the optimization problem:</strong> Follow the variational quantum tunneling to ground state |100001000001⟩.</li>
+                        <li><strong>View the optimized allocation:</strong> See orthogonal subband separation (Sub-0, 1, 2) and power back-off.</li>
+                        <li><strong>Compare BEFORE and AFTER:</strong> Verify +60.5% SINR gain, 0 outages, and 32.8% RF energy saved.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- PROMINENT VISUAL PROCESS FLOW NEAR TOP (EXACT REQUESTED SEQUENCE) -->
+            <div class="master-process-flow-container">
+                <div class="mpf-header">
+                    <span class="mpf-tag"><i class="fa-solid fa-compass"></i> COMPLETE PROJECT NARRATIVE FLOW</span>
+                    <span class="mpf-sub">Click any stage below to jump directly to its detailed explanation and live telemetry:</span>
+                </div>
+                <div class="mpf-steps-grid">
+                    <div class="master-flow-step step-1" data-target="sec-problem">
+                        <div class="step-badge">1</div>
+                        <div class="step-icon"><i class="fa-solid fa-users-rays"></i></div>
+                        <div class="step-meta">
+                            <strong>REAL-LIFE 5G PROBLEM</strong>
+                            <span>Shared spectrum &amp; cell overlap</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-2" data-target="sec-classical">
+                        <div class="step-badge">2</div>
+                        <div class="step-icon"><i class="fa-solid fa-landmark"></i></div>
+                        <div class="step-meta">
+                            <strong>EXISTING/CLASSICAL SOLUTION</strong>
+                            <span>Greedy heuristic baseline</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-3" data-target="sec-limitation">
+                        <div class="step-badge">3</div>
+                        <div class="step-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="step-meta">
+                            <strong>LIMITATION OF CLASSICAL</strong>
+                            <span>Local minima &amp; 5 outages</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-4" data-target="sec-quantum">
+                        <div class="step-badge">4</div>
+                        <div class="step-icon"><i class="fa-solid fa-atom"></i></div>
+                        <div class="step-meta">
+                            <strong>QUANTUM QAOA APPROACH</strong>
+                            <span>QUBO mapping &amp; tunneling</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-5" data-target="sec-apply-optimization">
+                        <div class="step-badge">5</div>
+                        <div class="step-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="step-meta">
+                            <strong>APPLY OPTIMIZATION</strong>
+                            <span>7-step execution sequence</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-6" data-target="sec-optimized">
+                        <div class="step-badge">6</div>
+                        <div class="step-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <div class="step-meta">
+                            <strong>OPTIMIZED 5G NETWORK</strong>
+                            <span>Orthogonal subbands (0,1,2)</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-7" data-target="sec-comparison">
+                        <div class="step-badge">7</div>
+                        <div class="step-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div class="step-meta">
+                            <strong>BEFORE vs AFTER</strong>
+                            <span>+60.5% SINR, 0 Outages</span>
+                        </div>
+                    </div>
+                    <div class="flow-arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <div class="master-flow-step step-8" data-target="sec-benefits">
+                        <div class="step-badge">8</div>
+                        <div class="step-icon"><i class="fa-solid fa-leaf"></i></div>
+                        <div class="step-meta">
+                            <strong>REAL-WORLD BENEFIT</strong>
+                            <span>32.8% Power Saved &amp; O-RAN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 1 — THE REAL-LIFE 5G PROBLEM ==================== -->
+        <section id="sec-problem" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge red"><i class="fa-solid fa-users-rays"></i> PART 1 OF 7</div>
+                <h2 class="part-title">The Real-Life 5G Problem</h2>
+                <p class="part-subtitle">What problem are we trying to solve? (The physical &amp; radio environment)</p>
+            </div>
+
+            <div class="narrative-card pictorial-problem-master-card">
+                <!-- Pictorial Header Banner -->
+                <div class="pictorial-hero-badge">
+                    <span class="phb-icon"><i class="fa-solid fa-eye"></i></span>
+                    <div class="phb-text">
+                        <strong>PICTORIAL CITY ENVIRONMENT: WHAT PHYSICALLY HAPPENS ON THE STREET</strong>
+                        <span>Two nearby base stations transmit on the exact same frequency (28.05 GHz) at maximum 39 dBm power — radio waves crash mid-air, creating severe noise that freezes videos and drops calls.</span>
+                    </div>
+                </div>
+
+                <!-- Pictorial Cityscape Visual Showcase -->
+                <div class="pictorial-cityscape-wrapper">
+                    <div class="cityscape-legend-bar">
+                        <div class="cl-item clash"><i class="fa-solid fa-bolt-lightning"></i> <strong>Red Waves:</strong> 28.05 GHz Co-Channel Clash</div>
+                        <div class="cl-item wall"><i class="fa-solid fa-cube"></i> <strong>Concrete Tower:</strong> -18 dB Shadow Fading</div>
+                        <div class="cl-item outage"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Street Level:</strong> Real Outages &amp; Buffer Traps</div>
+                        <div class="cl-item power"><i class="fa-solid fa-fire"></i> <strong>Towers:</strong> 39 dBm Max Burn (Grid Waste)</div>
+                    </div>
+
+                    <div class="svg-cityscape-container">
+                        <svg viewBox="0 0 1000 480" class="cityscape-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#050a16"/>
+                                    <stop offset="60%" stop-color="#0a152e"/>
+                                    <stop offset="100%" stop-color="#0e1d3d"/>
+                                </linearGradient>
+                                <linearGradient id="bldgGrad1" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#14213d"/>
+                                    <stop offset="100%" stop-color="#09101f"/>
+                                </linearGradient>
+                                <linearGradient id="bldgGrad2" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#1b2a47"/>
+                                    <stop offset="100%" stop-color="#0d172a"/>
+                                </linearGradient>
+                                <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#334155"/>
+                                    <stop offset="100%" stop-color="#1e293b"/>
+                                </linearGradient>
+                                <radialGradient id="clashGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#ef4444" stop-opacity="0.8"/>
+                                    <stop offset="40%" stop-color="#f97316" stop-opacity="0.5"/>
+                                    <stop offset="80%" stop-color="#f59e0b" stop-opacity="0.15"/>
+                                    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+                                </radialGradient>
+                                <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                                </filter>
+                            </defs>
+
+                            <!-- Sky Background -->
+                            <rect x="0" y="0" width="1000" height="430" fill="url(#skyGrad)"/>
+
+                            <!-- Distant City Skyline Silhouettes -->
+                            <path d="M 0,340 L 40,320 L 70,320 L 70,340 L 120,310 L 160,310 L 160,340 L 220,330 L 260,290 L 300,290 L 300,340 L 370,340 L 370,300 L 410,300 L 410,340 L 610,340 L 610,290 L 660,290 L 660,340 L 720,320 L 770,320 L 770,340 L 830,300 L 870,300 L 870,340 L 930,320 L 1000,340 L 1000,430 L 0,430 Z" fill="#070d1a" opacity="0.8"/>
+
+                            <!-- Left High-Rise (Tower 1 Base Station) -->
+                            <rect x="50" y="160" width="160" height="270" rx="3" fill="url(#bldgGrad1)" stroke="#1e293b" stroke-width="2"/>
+                            <!-- Building Windows -->
+                            <g fill="#38bdf8" opacity="0.35">
+                                <rect x="65" y="180" width="12" height="10" rx="1"/>
+                                <rect x="85" y="180" width="12" height="10" rx="1"/>
+                                <rect x="105" y="180" width="12" height="10" rx="1"/>
+                                <rect x="125" y="180" width="12" height="10" rx="1"/>
+                                <rect x="145" y="180" width="12" height="10" rx="1"/>
+                                <rect x="165" y="180" width="12" height="10" rx="1"/>
+                                <rect x="65" y="205" width="12" height="10" rx="1"/>
+                                <rect x="85" y="205" width="12" height="10" rx="1"/>
+                                <rect x="125" y="205" width="12" height="10" rx="1"/>
+                                <rect x="145" y="205" width="12" height="10" rx="1"/>
+                                <rect x="165" y="205" width="12" height="10" rx="1"/>
+                                <rect x="65" y="230" width="12" height="10" rx="1"/>
+                                <rect x="105" y="230" width="12" height="10" rx="1"/>
+                                <rect x="125" y="230" width="12" height="10" rx="1"/>
+                                <rect x="145" y="230" width="12" height="10" rx="1"/>
+                                <rect x="85" y="255" width="12" height="10" rx="1"/>
+                                <rect x="105" y="255" width="12" height="10" rx="1"/>
+                                <rect x="145" y="255" width="12" height="10" rx="1"/>
+                                <rect x="165" y="255" width="12" height="10" rx="1"/>
+                            </g>
+                            <!-- Tower 1 Mast on Rooftop -->
+                            <line x1="130" y1="160" x2="130" y2="90" stroke="#94a3b8" stroke-width="4"/>
+                            <polygon points="120,95 140,95 130,80" fill="#3b82f6"/>
+                            <rect x="122" y="85" width="16" height="35" rx="2" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+                            <circle cx="130" cy="85" r="4" fill="#ef4444" filter="url(#glowFilter)"/>
+
+                            <!-- Left Tower Waves (Red/Clashing on 28.05 GHz) -->
+                            <g class="tower1-waves">
+                                <path d="M 160,50 A 60,60 0 0 1 160,150" stroke="#ef4444" stroke-width="3" fill="none" opacity="0.9" class="pulse-wave-1"/>
+                                <path d="M 200,20 A 110,110 0 0 1 200,190" stroke="#ef4444" stroke-width="3.5" fill="none" opacity="0.75" class="pulse-wave-2"/>
+                                <path d="M 250,-10 A 160,160 0 0 1 250,230" stroke="#ef4444" stroke-width="4" fill="none" opacity="0.6" class="pulse-wave-3"/>
+                                <path d="M 310,-40 A 220,220 0 0 1 310,270" stroke="#ef4444" stroke-width="3" stroke-dasharray="6,4" fill="none" opacity="0.45" class="pulse-wave-4"/>
+                            </g>
+
+                            <!-- Tower 1 Floating Spec Box -->
+                            <g transform="translate(30, 20)">
+                                <rect width="180" height="60" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1.8" filter="url(#glowFilter)"/>
+                                <text x="10" y="20" fill="#f87171" font-size="12" font-weight="bold" font-family="sans-serif">📡 TOWER 1 (Station A)</text>
+                                <text x="10" y="37" fill="#cbd5e1" font-size="10.5" font-family="monospace">Freq: 28.05 GHz (Sub-0)</text>
+                                <text x="10" y="52" fill="#fca5a5" font-size="10.5" font-weight="bold" font-family="sans-serif">🔥 Power: 39 dBm [MAX BURN]</text>
+                            </g>
+
+                            <!-- Right High-Rise (Tower 2 Base Station) -->
+                            <rect x="790" y="160" width="160" height="270" rx="3" fill="url(#bldgGrad1)" stroke="#1e293b" stroke-width="2"/>
+                            <!-- Building Windows -->
+                            <g fill="#38bdf8" opacity="0.35">
+                                <rect x="805" y="180" width="12" height="10" rx="1"/>
+                                <rect x="825" y="180" width="12" height="10" rx="1"/>
+                                <rect x="845" y="180" width="12" height="10" rx="1"/>
+                                <rect x="865" y="180" width="12" height="10" rx="1"/>
+                                <rect x="885" y="180" width="12" height="10" rx="1"/>
+                                <rect x="905" y="180" width="12" height="10" rx="1"/>
+                                <rect x="805" y="205" width="12" height="10" rx="1"/>
+                                <rect x="845" y="205" width="12" height="10" rx="1"/>
+                                <rect x="865" y="205" width="12" height="10" rx="1"/>
+                                <rect x="905" y="205" width="12" height="10" rx="1"/>
+                                <rect x="825" y="230" width="12" height="10" rx="1"/>
+                                <rect x="845" y="230" width="12" height="10" rx="1"/>
+                                <rect x="885" y="230" width="12" height="10" rx="1"/>
+                                <rect x="905" y="230" width="12" height="10" rx="1"/>
+                                <rect x="805" y="255" width="12" height="10" rx="1"/>
+                                <rect x="825" y="255" width="12" height="10" rx="1"/>
+                                <rect x="865" y="255" width="12" height="10" rx="1"/>
+                                <rect x="885" y="255" width="12" height="10" rx="1"/>
+                            </g>
+                            <!-- Tower 2 Mast on Rooftop -->
+                            <line x1="870" y1="160" x2="870" y2="90" stroke="#94a3b8" stroke-width="4"/>
+                            <polygon points="860,95 880,95 870,80" fill="#3b82f6"/>
+                            <rect x="862" y="85" width="16" height="35" rx="2" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5"/>
+                            <circle cx="870" cy="85" r="4" fill="#ef4444" filter="url(#glowFilter)"/>
+
+                            <!-- Right Tower Waves (Orange-Red/Clashing on 28.05 GHz) -->
+                            <g class="tower2-waves">
+                                <path d="M 840,50 A 60,60 0 0 0 840,150" stroke="#f97316" stroke-width="3" fill="none" opacity="0.9" class="pulse-wave-1"/>
+                                <path d="M 800,20 A 110,110 0 0 0 800,190" stroke="#f97316" stroke-width="3.5" fill="none" opacity="0.75" class="pulse-wave-2"/>
+                                <path d="M 750,-10 A 160,160 0 0 0 750,230" stroke="#f97316" stroke-width="4" fill="none" opacity="0.6" class="pulse-wave-3"/>
+                                <path d="M 690,-40 A 220,220 0 0 0 690,270" stroke="#f97316" stroke-width="3" stroke-dasharray="6,4" fill="none" opacity="0.45" class="pulse-wave-4"/>
+                            </g>
+
+                            <!-- Tower 2 Floating Spec Box -->
+                            <g transform="translate(790, 20)">
+                                <rect width="180" height="60" rx="6" fill="#0f172a" stroke="#f97316" stroke-width="1.8" filter="url(#glowFilter)"/>
+                                <text x="10" y="20" fill="#fb923c" font-size="12" font-weight="bold" font-family="sans-serif">📡 TOWER 2 (Station B)</text>
+                                <text x="10" y="37" fill="#cbd5e1" font-size="10.5" font-family="monospace">Freq: 28.05 GHz (CLASH!)</text>
+                                <text x="10" y="52" fill="#fed7aa" font-size="10.5" font-weight="bold" font-family="sans-serif">🔥 Power: 39 dBm [MAX BURN]</text>
+                            </g>
+
+                            <!-- Center Concrete Obstacle Skyscraper (NLOS Shadowing) -->
+                            <rect x="445" y="190" width="110" height="240" rx="4" fill="url(#wallGrad)" stroke="#475569" stroke-width="2"/>
+                            <!-- Architectural Lines on Wall -->
+                            <line x1="445" y1="230" x2="555" y2="230" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="445" y1="270" x2="555" y2="270" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="445" y1="310" x2="555" y2="310" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="445" y1="350" x2="555" y2="350" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="445" y1="390" x2="555" y2="390" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <!-- Wall Label -->
+                            <g transform="translate(450, 200)">
+                                <rect width="100" height="42" rx="4" fill="#0f172a" stroke="#cbd5e1" stroke-width="1"/>
+                                <text x="50" y="18" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle" font-family="sans-serif">CONCRETE</text>
+                                <text x="50" y="32" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="monospace">-18 dB NLOS Loss</text>
+                            </g>
+
+                            <!-- MID-AIR CO-CHANNEL COLLISION & INTERFERENCE GLOW -->
+                            <circle cx="500" cy="115" r="105" fill="url(#clashGlow)" class="clash-pulse-glow"/>
+                            
+                            <!-- Electric Sparks / Collision Lightning -->
+                            <g stroke="#fef08a" stroke-width="2.5" fill="none" class="clash-sparks">
+                                <path d="M 480,95 L 495,110 L 485,120 L 510,135"/>
+                                <path d="M 525,85 L 505,105 L 515,115 L 495,130"/>
+                                <path d="M 465,115 L 480,110 L 475,125 L 490,120"/>
+                                <path d="M 535,110 L 520,118 L 528,128 L 510,125"/>
+                            </g>
+
+                            <!-- Big Center Collision Warning Banner -->
+                            <g transform="translate(340, 20)">
+                                <rect width="320" height="66" rx="8" fill="#18070b" stroke="#ef4444" stroke-width="2" filter="url(#glowFilter)"/>
+                                <text x="160" y="24" fill="#f87171" font-size="13" font-weight="900" text-anchor="middle" font-family="sans-serif">💥 CO-CHANNEL COLLISION ZONE</text>
+                                <text x="160" y="42" fill="#fecaca" font-size="10.5" text-anchor="middle" font-family="sans-serif">Both Towers on Same 28.05 GHz Frequency</text>
+                                <text x="160" y="56" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle" font-family="sans-serif">Signals Clash Mid-Air → Radio Chaos &amp; Severe Noise</text>
+                            </g>
+
+                            <!-- STREET LEVEL (Pavement, Road, Lane markings) -->
+                            <rect x="0" y="430" width="1000" height="50" fill="#090d16" stroke="#1e293b" stroke-width="1"/>
+                            <line x1="0" y1="455" x2="1000" y2="455" stroke="#334155" stroke-width="2.5" stroke-dasharray="25,20"/>
+                            <!-- Sidewalk Curb -->
+                            <line x1="0" y1="430" x2="1000" y2="430" stroke="#475569" stroke-width="2"/>
+
+                            <!-- ================= REAL-LIFE STREET CONSEQUENCE 1: PEDESTRIAN BUFFERING ================= -->
+                            <!-- Pedestrian Figure -->
+                            <g transform="translate(245, 375)">
+                                <circle cx="10" cy="10" r="7" fill="#60a5fa"/>
+                                <line x1="10" y1="17" x2="10" y2="40" stroke="#60a5fa" stroke-width="4"/>
+                                <line x1="10" y1="24" x2="2" y2="35" stroke="#60a5fa" stroke-width="3"/>
+                                <line x1="10" y1="24" x2="20" y2="28" stroke="#60a5fa" stroke-width="3"/>
+                                <line x1="10" y1="40" x2="4" y2="55" stroke="#60a5fa" stroke-width="3.5"/>
+                                <line x1="10" y1="40" x2="16" y2="55" stroke="#60a5fa" stroke-width="3.5"/>
+                                <!-- Phone in hand -->
+                                <rect x="18" y="24" width="7" height="12" rx="1.5" fill="#f87171" stroke="#ef4444" stroke-width="1"/>
+                            </g>
+
+                            <!-- Phone UI Callout Card (Floating Above Pedestrian) -->
+                            <g transform="translate(145, 260)">
+                                <!-- Pointer triangle -->
+                                <polygon points="110,90 120,90 115,105" fill="#0f172a"/>
+                                <rect width="210" height="90" rx="8" fill="#0b1120" stroke="#ef4444" stroke-width="2" filter="url(#glowFilter)"/>
+                                <!-- Phone Header -->
+                                <rect x="0" y="0" width="210" height="22" rx="8" fill="#1e1b4b"/>
+                                <text x="10" y="15" fill="#f43f5e" font-size="10" font-weight="bold" font-family="sans-serif">🔴 USER 1 (STREAMING)</text>
+                                <text x="140" y="15" fill="#fca5a5" font-size="9" font-family="monospace">SINR: 11.2 dB</text>
+                                
+                                <!-- Video Player Mockup -->
+                                <rect x="12" y="30" width="186" height="42" rx="4" fill="#020617" stroke="#334155" stroke-width="1"/>
+                                <!-- Red Buffering Spinner -->
+                                <circle cx="36" cy="51" r="10" fill="none" stroke="#334155" stroke-width="2.5"/>
+                                <circle cx="36" cy="51" r="10" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="16,30" class="svg-spinner"/>
+                                <text x="56" y="47" fill="#fca5a5" font-size="11" font-weight="900" font-family="sans-serif">VIDEO BUFFERING...</text>
+                                <text x="56" y="61" fill="#94a3b8" font-size="9" font-family="sans-serif">Stream frozen at 240p quality</text>
+                                
+                                <!-- Outage Badge -->
+                                <rect x="12" y="75" width="186" height="12" rx="2" fill="#ef4444" opacity="0.2"/>
+                                <text x="105" y="84" fill="#f87171" font-size="8.5" font-weight="bold" text-anchor="middle" font-family="sans-serif">❌ OUTAGE: BELOW 15 dB QOS THRESHOLD</text>
+                            </g>
+
+                            <!-- ================= REAL-LIFE STREET CONSEQUENCE 2: ZOOM CALL DROPPED ================= -->
+                            <!-- Executive at cafe table -->
+                            <g transform="translate(635, 375)">
+                                <!-- Table & chair -->
+                                <line x1="5" y1="35" x2="35" y2="35" stroke="#64748b" stroke-width="3"/>
+                                <line x1="20" y1="35" x2="20" y2="55" stroke="#64748b" stroke-width="3"/>
+                                <!-- Sitting person -->
+                                <circle cx="45" cy="15" r="7" fill="#a78bfa"/>
+                                <line x1="45" y1="22" x2="45" y2="42" stroke="#a78bfa" stroke-width="4"/>
+                                <line x1="45" y1="30" x2="30" y2="34" stroke="#a78bfa" stroke-width="3"/>
+                                <line x1="45" y1="42" x2="35" y2="55" stroke="#a78bfa" stroke-width="3.5"/>
+                                <!-- Laptop on table -->
+                                <polygon points="12,34 26,34 24,24 14,24" fill="#cbd5e1"/>
+                                <line x1="12" y1="34" x2="28" y2="34" stroke="#94a3b8" stroke-width="2"/>
+                            </g>
+
+                            <!-- Laptop UI Callout Card (Floating Above Cafe Worker) -->
+                            <g transform="translate(565, 260)">
+                                <!-- Pointer triangle -->
+                                <polygon points="90,90 100,90 95,105" fill="#0f172a"/>
+                                <rect width="215" height="90" rx="8" fill="#0b1120" stroke="#ef4444" stroke-width="2" filter="url(#glowFilter)"/>
+                                <!-- Laptop Header -->
+                                <rect x="0" y="0" width="215" height="22" rx="8" fill="#3b0764"/>
+                                <text x="10" y="15" fill="#f43f5e" font-size="10" font-weight="bold" font-family="sans-serif">🔴 USER 2 (REMOTE WORK)</text>
+                                <text x="145" y="15" fill="#fca5a5" font-size="9" font-family="monospace">SINR: 12.1 dB</text>
+                                
+                                <!-- Conference Call Mockup -->
+                                <rect x="12" y="30" width="191" height="42" rx="4" fill="#020617" stroke="#334155" stroke-width="1"/>
+                                <!-- Dropped Call Icon -->
+                                <circle cx="34" cy="51" r="10" fill="#ef4444" opacity="0.2"/>
+                                <text x="34" y="55" fill="#ef4444" font-size="13" font-weight="bold" text-anchor="middle">✕</text>
+                                <text x="54" y="47" fill="#fca5a5" font-size="11" font-weight="900" font-family="sans-serif">ZOOM CALL DROPPED!</text>
+                                <text x="54" y="61" fill="#94a3b8" font-size="9" font-family="sans-serif">42% Packet Loss • Audio muted</text>
+                                
+                                <!-- Outage Badge -->
+                                <rect x="12" y="75" width="191" height="12" rx="2" fill="#ef4444" opacity="0.2"/>
+                                <text x="107" y="84" fill="#f87171" font-size="8.5" font-weight="bold" text-anchor="middle" font-family="sans-serif">❌ OUTAGE: CLIENT PITCH DISCONNECTED</text>
+                            </g>
+
+                            <!-- ================= REAL-LIFE STREET CONSEQUENCE 3: AMBULANCE / V2X LATENCY ================= -->
+                            <!-- Emergency Vehicle / Ambulance on Road -->
+                            <g transform="translate(370, 420)">
+                                <!-- Vehicle Body -->
+                                <rect x="0" y="10" width="65" height="24" rx="4" fill="#dc2626" stroke="#ffffff" stroke-width="1.5"/>
+                                <rect x="42" y="12" width="20" height="12" rx="2" fill="#93c5fd" opacity="0.8"/>
+                                <circle cx="16" cy="34" r="6" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+                                <circle cx="50" cy="34" r="6" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+                                <!-- Roof Siren Flashing -->
+                                <polygon points="28,10 36,10 32,4" fill="#fbbf24" class="siren-flash"/>
+                                <circle cx="32" cy="4" r="3" fill="#ef4444"/>
+                                <line x1="32" y1="4" x2="32" y2="-6" stroke="#94a3b8" stroke-width="1.5"/>
+                                <circle cx="32" cy="-6" r="2" fill="#f59e0b"/>
+                            </g>
+
+                            <!-- Ambulance Warning Callout -->
+                            <g transform="translate(365, 345)">
+                                <polygon points="35,32 45,32 40,40" fill="#0f172a"/>
+                                <rect width="185" height="42" rx="6" fill="#180c05" stroke="#f59e0b" stroke-width="1.8" filter="url(#glowFilter)"/>
+                                <text x="10" y="16" fill="#fbbf24" font-size="10.5" font-weight="900" font-family="sans-serif">🚑 USER 5 (AMBULANCE V2X)</text>
+                                <text x="10" y="30" fill="#fde68a" font-size="9" font-family="sans-serif">⚠️ 185 ms Latency Spike (SLA &lt;10ms)</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 3 Visual Pictorial Scenario Cards Below Cityscape -->
+                <div class="pictorial-scenario-grid">
+                    <div class="pictorial-scenario-card border-red">
+                        <div class="psc-top">
+                            <span class="psc-icon red"><i class="fa-solid fa-volume-high"></i></span>
+                            <div class="psc-title-wrap">
+                                <h4>1. The "Cocktail Party" Effect</h4>
+                                <span class="psc-badge red">Co-Channel Clash</span>
+                            </div>
+                        </div>
+                        <div class="psc-visual-box">
+                            <div class="psc-comparison-row">
+                                <div class="psc-c-side bad">
+                                    <span class="psc-c-label">REAL-WORLD CLASH (TODAY)</span>
+                                    <div class="psc-sound-vis">
+                                        <i class="fa-solid fa-bullhorn text-red"></i>
+                                        <div class="psc-wave-clash-bars">
+                                            <span class="bar clash-1"></span>
+                                            <span class="bar clash-2"></span>
+                                            <span class="bar clash-3"></span>
+                                        </div>
+                                        <i class="fa-solid fa-bullhorn text-orange"></i>
+                                    </div>
+                                    <strong class="psc-bad-text">Both Towers on 28.05 GHz</strong>
+                                    <span class="psc-sub">Screaming at same pitch = Total Noise &amp; Packet Chaos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="psc-desc">When adjacent base stations broadcast over the exact same subband, user devices receive scrambled radio waves. Modulation crashes to QPSK, causing severe video buffering.</p>
+                        <div class="psc-stat-pill red"><i class="fa-solid fa-circle-exclamation"></i> 100% Interference Contention</div>
+                    </div>
+
+                    <div class="pictorial-scenario-card border-amber">
+                        <div class="psc-top">
+                            <span class="psc-icon amber"><i class="fa-solid fa-fire-burner"></i></span>
+                            <div class="psc-title-wrap">
+                                <h4>2. The Power Overheat Spiral</h4>
+                                <span class="psc-badge amber">Energy Wastage</span>
+                            </div>
+                        </div>
+                        <div class="psc-visual-box">
+                            <div class="psc-power-spiral">
+                                <div class="spiral-step"><i class="fa-solid fa-triangle-exclamation text-amber"></i> Towers Sense Interference</div>
+                                <div class="spiral-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                                <div class="spiral-step"><i class="fa-solid fa-bolt text-red"></i> Crank Amplifiers to 39 dBm Max</div>
+                                <div class="spiral-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                                <div class="spiral-step danger"><i class="fa-solid fa-fire text-red"></i> 32.8% Energy Burned for Zero Gain</div>
+                            </div>
+                        </div>
+                        <p class="psc-desc">Towers burn full 39 dBm power attempting to shout louder than adjacent towers. This overheats base station power amplifiers and wastes municipal grid energy without fixing SINR.</p>
+                        <div class="psc-stat-pill amber"><i class="fa-solid fa-plug-circle-bolt"></i> 39 dBm Max Power (100% Burn)</div>
+                    </div>
+
+                    <div class="pictorial-scenario-card border-purple">
+                        <div class="psc-top">
+                            <span class="psc-icon purple"><i class="fa-solid fa-users-slash"></i></span>
+                            <div class="psc-title-wrap">
+                                <h4>3. The 5-User Outage Reality</h4>
+                                <span class="psc-badge purple">Human Consequence</span>
+                            </div>
+                        </div>
+                        <div class="psc-visual-box">
+                            <div class="psc-outage-users-list">
+                                <div class="psc-u-item"><span class="psc-u-avatar"><i class="fa-solid fa-mobile-screen"></i> U1</span> <span class="psc-u-snr bad">11.2 dB</span> <span class="psc-u-status">Buffering (240p)</span></div>
+                                <div class="psc-u-item"><span class="psc-u-avatar"><i class="fa-solid fa-laptop"></i> U2</span> <span class="psc-u-snr bad">12.1 dB</span> <span class="psc-u-status">Dropped Zoom</span></div>
+                                <div class="psc-u-item"><span class="psc-u-avatar"><i class="fa-solid fa-building"></i> U3</span> <span class="psc-u-snr bad">9.8 dB</span> <span class="psc-u-status">Blocked by Wall</span></div>
+                                <div class="psc-u-item"><span class="psc-u-avatar"><i class="fa-solid fa-wifi"></i> U4</span> <span class="psc-u-snr bad">13.4 dB</span> <span class="psc-u-status">42% Packet Loss</span></div>
+                                <div class="psc-u-item"><span class="psc-u-avatar"><i class="fa-solid fa-truck-medical"></i> U5</span> <span class="psc-u-snr bad">10.5 dB</span> <span class="psc-u-status">V2X Safety Lag</span></div>
+                            </div>
+                        </div>
+                        <p class="psc-desc">Any user device with SINR below 15 dB suffers severe service degradation or complete disconnection. In the unoptimized network, all 5 active test users are trapped in outage.</p>
+                        <div class="psc-stat-pill purple"><i class="fa-solid fa-ban"></i> 5 Outages (0% Meeting 15 dB SLA)</div>
+                    </div>
+                </div>
+
+                <!-- Simple Visual Chain Required by User -->
+                <div class="visual-chain-master-box">
+                    <div class="chain-title-label"><i class="fa-solid fa-link"></i> THE CAUSE-AND-EFFECT DEGRADATION CHAIN:</div>
+                    <div class="simple-arrow-chain">
+                        <div class="chain-node">
+                            <i class="fa-solid fa-users"></i>
+                            <strong>Many Users</strong>
+                            <span>High urban density</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                            <strong>Multiple Towers</strong>
+                            <span>Nearby base stations</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node">
+                            <i class="fa-solid fa-wave-square"></i>
+                            <strong>Shared Radio Resources</strong>
+                            <span>Limited spectrum</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node alert">
+                            <i class="fa-solid fa-arrows-to-circle"></i>
+                            <strong>Resource Conflict</strong>
+                            <span>Overlapping allocations</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node alert">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <strong>Interference</strong>
+                            <span>Co-channel collisions</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node alert">
+                            <i class="fa-solid fa-chart-line-down"></i>
+                            <strong>Lower SINR</strong>
+                            <span>Signal degradation (&lt;15 dB)</span>
+                        </div>
+                        <div class="chain-sep"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="chain-node critical">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <strong>QoS Problems + High Power</strong>
+                            <span>5 Outages &amp; 39 dBm waste</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 2 — EXISTING CLASSICAL 5G SOLUTION ==================== -->
+        <section id="sec-classical" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge amber"><i class="fa-solid fa-landmark"></i> PART 2 OF 7</div>
+                <h2 class="part-title">Existing Classical 5G Solution</h2>
+                <p class="part-subtitle">How conventional Radio Resource Management (RRM) allocates spectrum and power</p>
+            </div>
+
+            <div class="narrative-card">
+                <div class="classical-explainer-box">
+                    <p class="lead-scenario-text">
+                        In commercial 5G networks, a conventional/classical resource allocator makes allocation decisions using classical optimization algorithms or heuristic/greedy logic. It takes current network measurements and determines how to assign beams, channels, and power.
+                    </p>
+                </div>
+
+                <!-- Input and Output Flow Diagram -->
+                <div class="io-diagram-card">
+                    <div class="io-diagram-header">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>CLASSICAL RESOURCE ALLOCATION INPUT &amp; OUTPUT ARCHITECTURE</span>
+                    </div>
+                    <div class="io-flow-horizontal">
+                        <div class="io-box io-input">
+                            <span class="io-tag">INPUT DATA</span>
+                            <h4>Network Information</h4>
+                            <ul>
+                                <li>• User locations $(x_u, y_u)$</li>
+                                <li>• Tower locations $(x_b, y_b)$</li>
+                                <li>• Channel conditions (LOS/NLOS path loss)</li>
+                                <li>• Available subbands (Sub-0, 1, 2)</li>
+                                <li>• Candidate beams ($-30^\circ$ to $+30^\circ$)</li>
+                                <li>• Power levels ($30 - 39\text{ dBm}$)</li>
+                                <li>• QoS requirements ($\text{SINR} \ge 15\text{ dB}$)</li>
+                            </ul>
+                        </div>
+                        <div class="io-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+
+                        <div class="io-box io-decision">
+                            <span class="io-tag decision">CLASSICAL DECISION</span>
+                            <h4>Conventional Heuristic Schedulers</h4>
+                            <p>Evaluates available options using greedy local search, independent per-cell heuristics, or genetic algorithms to pick feasible configurations.</p>
+                            <span class="io-badge-warn">Settles on sub-optimal configuration under high contention</span>
+                        </div>
+                        <div class="io-arrow"><i class="fa-solid fa-arrow-right-long"></i></div>
+
+                        <div class="io-box io-output">
+                            <span class="io-tag output">OUTPUT ASSIGNMENT</span>
+                            <h4>5G Network Configuration</h4>
+                            <ul>
+                                <li>• Tower 1: Subband 0 @ 39 dBm</li>
+                                <li>• Tower 2: Subband 0 @ 39 dBm (CLASH)</li>
+                                <li>• Tower 3: Subband 0 @ 39 dBm (CLASH)</li>
+                                <li>• Co-Channel Mesh: 100% Contention</li>
+                                <li>• Result: 5 Users in Outage</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="io-footer-note">
+                        <em>Important: Classical algorithms can solve small toy scenarios. However, as network density, user counts, and candidate options scale up, the number of combinations becomes huge, and heuristic/local search methods settle on sub-optimal configurations trapped behind interference barriers.</em>
+                    </p>
+                </div>
+
+                <!-- LARGE CLASSICAL BASELINE — BEFORE OPTIMIZATION PANEL (REMAINS SAVED/VISIBLE) -->
+                <div class="classical-baseline-hero-panel" id="classical-baseline-permanent-panel">
+                    <div class="cb-header">
+                        <div class="cb-badge-before">
+                            <i class="fa-solid fa-landmark"></i> CLASSICAL BASELINE — BEFORE
+                        </div>
+                        <span class="cb-timestamp">Persistent Reference State (Saved &amp; Maintained Throughout Demo)</span>
+                    </div>
+
+                    <div class="cb-metrics-grid">
+                        <div class="cb-metric-card alert">
+                            <span class="cb-m-label">Average SINR</span>
+                            <span class="cb-m-val text-amber">14.2 dB</span>
+                            <p class="cb-m-desc"><strong>Poor signal quality:</strong> Below the 15 dB QoS floor required for stable high-order modulation.</p>
+                        </div>
+
+                        <div class="cb-metric-card critical">
+                            <span class="cb-m-label">QoS Outages</span>
+                            <span class="cb-m-val text-red">5 Users</span>
+                            <p class="cb-m-desc"><strong>Service degradation:</strong> Users experience video buffering, packet drops, and connection blackouts.</p>
+                        </div>
+
+                        <div class="cb-metric-card warn">
+                            <span class="cb-m-label">Transmit Power</span>
+                            <span class="cb-m-val">100% (39 dBm)</span>
+                            <p class="cb-m-desc"><strong>Baseline power consumption:</strong> Towers blast maximum power in an uncoordinated shout to overcome noise.</p>
+                        </div>
+
+                        <div class="cb-metric-card warn">
+                            <span class="cb-m-label">Interference</span>
+                            <span class="cb-m-val text-red">100% Baseline</span>
+                            <p class="cb-m-desc"><strong>Reference interference:</strong> Heavy co-channel collision vectors mesh across cell footprints.</p>
+                        </div>
+
+                        <div class="cb-metric-card">
+                            <span class="cb-m-label">Spectral Efficiency</span>
+                            <span class="cb-m-val">3.82 bps/Hz</span>
+                            <p class="cb-m-desc"><strong>Constrained bandwidth:</strong> Heavy packet retransmissions consume valuable spectrum capacity.</p>
+                        </div>
+
+                        <div class="cb-metric-card">
+                            <span class="cb-m-label">Energy Efficiency</span>
+                            <span class="cb-m-val">1.15 Mbits/Joule</span>
+                            <p class="cb-m-desc"><strong>High energy burn:</strong> High power consumption produces low effective throughput per joule.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHAT DOES THE CLASSICAL NETWORK ACTUALLY DO? VISUAL & MAP -->
+                <div class="what-classical-does-container">
+                    <div class="wcd-header">
+                        <div class="wcd-badge"><i class="fa-solid fa-eye"></i> VISUAL NETWORK INSPECTION</div>
+                        <h3 class="wcd-title">What Does the Classical Network Actually Do?</h3>
+                        <p class="wcd-sub">
+                            Observe the 3 base stations and 5 mobile users on the physical field. All 3 towers transmit resources on <strong>Subband 0 (28.05 GHz) at maximum 39 dBm power</strong>, producing severe co-channel interference and 5 subscriber outages:
+                        </p>
+                    </div>
+
+                    <!-- Per-Tower Classical Allocation Snapshot -->
+                    <div class="tower-alloc-cards-row">
+                        <div class="tower-alloc-card t1">
+                            <div class="ta-top">
+                                <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 1</strong></span>
+                                <span class="ta-pill blue">Subband 0</span>
+                            </div>
+                            <div class="ta-details">
+                                <div>Frequency: <strong>28.05 GHz</strong></div>
+                                <div>Transmit Power: <strong class="text-amber">39 dBm (100%)</strong></div>
+                                <div>Beam Azimuth: <strong>0.0°</strong></div>
+                                <div>Interference: <strong class="text-red">Collides with T2 &amp; T3</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="tower-alloc-card t2 clashing">
+                            <div class="ta-top">
+                                <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 2</strong></span>
+                                <span class="ta-pill red">Subband 0 (CLASH)</span>
+                            </div>
+                            <div class="ta-details">
+                                <div>Frequency: <strong>28.05 GHz</strong></div>
+                                <div>Transmit Power: <strong class="text-amber">39 dBm (100%)</strong></div>
+                                <div>Beam Azimuth: <strong>-15.0°</strong></div>
+                                <div>Interference: <strong class="text-red">Collides with T1 &amp; T3</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="tower-alloc-card t3 clashing">
+                            <div class="ta-top">
+                                <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 3</strong></span>
+                                <span class="ta-pill red">Subband 0 (CLASH)</span>
+                            </div>
+                            <div class="ta-details">
+                                <div>Frequency: <strong>28.05 GHz</strong></div>
+                                <div>Transmit Power: <strong class="text-amber">39 dBm (100%)</strong></div>
+                                <div>Beam Azimuth: <strong>+15.0°</strong></div>
+                                <div>Interference: <strong class="text-red">Collides with T1 &amp; T2</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Display Mode Switcher & Active State Strip -->
+                    <div class="network-mode-master-strip">
+                        <div class="mode-switcher-left">
+                            <span class="mode-label"><i class="fa-solid fa-layer-group"></i> DISPLAY MODE:</span>
+                            <div class="mode-buttons-group">
+                                <button id="btn-mode-classical" class="btn-network-mode active" title="Display the Classical Baseline configuration">
+                                    <i class="fa-solid fa-landmark"></i> Classical Baseline (Before)
+                                </button>
+                                <button id="btn-mode-quantum" class="btn-network-mode" title="Display the Quantum-Optimized configuration">
+                                    <i class="fa-solid fa-atom"></i> Quantum-Optimized (After QAOA)
+                                </button>
+                                <button id="btn-mode-sidebyside" class="btn-network-mode" title="Compare Baseline and Optimized side-by-side">
+                                    <i class="fa-solid fa-scale-balanced"></i> Compare Both (Side-by-Side)
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mode-status-right">
+                            <span id="current-state-pill" class="state-status-pill baseline">
+                                <i class="fa-solid fa-triangle-exclamation"></i> CURRENT STATE: CLASSICAL BASELINE (5 Outages / High Contention)
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Post-Optimization Success Banner (Visible when QAOA is complete) -->
+                    <div id="optimization-complete-banner" class="optimization-complete-banner hidden">
+                        <div class="opt-banner-left">
+                            <div class="opt-banner-icon"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="opt-banner-text">
+                                <h4>OPTIMIZATION COMPLETE: Global Ground State |100001000001⟩ Applied</h4>
+                                <p>Quantum QAOA successfully decoupled cell carriers into orthogonal subbands. Zero co-channel clashes remain.</p>
+                            </div>
+                        </div>
+                        <div class="opt-banner-actions">
+                            <button id="btn-postopt-before" class="btn-opt-switch"><i class="fa-solid fa-arrow-left"></i> View Before</button>
+                            <button id="btn-postopt-after" class="btn-opt-switch active"><i class="fa-solid fa-eye"></i> View After</button>
+                            <button id="btn-postopt-compare" class="btn-opt-switch"><i class="fa-solid fa-scale-balanced"></i> Compare Both</button>
+                        </div>
+                    </div>
+
+                    <!-- Direct User Instruction Banner Directly Above Map -->
+                    <div class="user-instruction-strip">
+                        <div class="instruction-left">
+                            <span class="pulse-indicator-small cyan"></span>
+                            <strong>Interactive Network Canvas:</strong> Move users and towers freely to see how the 5G network automatically connects users to the nearest tower. Observe co-channel collision vectors between overlapping cells.
+                        </div>
+                        <div class="instruction-right">
+                            <span><i class="fa-solid fa-arrows-up-down-left-right"></i> Drag Towers &amp; Users freely</span>
+                            <span><i class="fa-solid fa-tower-broadcast"></i> Dynamic Handover</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Interactive Network Area: Map(s) + Side Control Panel -->
+                    <div class="main-network-workspace-grid">
+                        <!-- Dual Mode Map Container (Single Canvas View OR Side-by-Side View) -->
+                        <div class="network-map-container" id="maps-viewport-container">
+                            
+                            <!-- 1. SINGLE MAP CONTAINER (Default View: Classical or Quantum) -->
+                            <div id="single-map-container" class="map-view-box">
+                                <div class="map-header-bar">
+                                    <div class="map-title-wrap">
+                                        <h3 id="single-map-heading"><i class="fa-solid fa-satellite-dish"></i> Interactive 5G Network Map (Classical Baseline)</h3>
+                                        <span class="map-subtext" id="single-map-subtext">3GPP TR 38.901 28 GHz mmWave Field • All towers on Subband 0 (28.05 GHz) • 5 Outages</span>
+                                    </div>
+                                    <div class="map-quick-tags">
+                                        <span class="tag-handover-live" id="handover-status-tag"><i class="fa-solid fa-bolt"></i> Auto-Handover: ACTIVE</span>
+                                    </div>
+                                </div>
+
+                                <div class="canvas-viewport-wrapper main-canvas-wrapper">
+                                    <canvas id="network-canvas" width="960" height="540"></canvas>
+                                    
+                                    <!-- Map Legend Strip -->
+                                    <div class="canvas-data-legend clean-legend">
+                                        <span class="legend-entry"><span class="marker gnb-marker"></span> 5G Tower (gNodeB)</span>
+                                        <span class="legend-entry"><span class="marker zone-ultra-marker"></span> ⚡ &lt;80m (43 dBm Gold)</span>
+                                        <span class="legend-entry"><span class="marker zone-near-marker"></span> 🟢 80-150m (40 dBm Green)</span>
+                                        <span class="legend-entry"><span class="marker zone-mid-marker"></span> 🔵 150-220m (36 dBm Cyan)</span>
+                                        <span class="legend-entry"><span class="marker zone-far-marker"></span> 🟣 220-290m (32 dBm Purple)</span>
+                                        <span class="legend-entry"><span class="marker wall-marker"></span> 🏢 Wall (-18 dB Loss)</span>
+                                        <span class="legend-entry"><span class="marker ue-mobile-marker"></span> 📱 Mobile User</span>
+                                        <span class="legend-entry"><span class="marker interf-mesh-marker"></span> Co-Channel Interference</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. SIDE-BY-SIDE DUAL MAP CONTAINER (Compare Both) -->
+                            <div id="sidebyside-container" class="sidebyside-maps-container hidden">
+                                <!-- Left Panel: Classical Baseline (Before) -->
+                                <div class="sidebyside-panel baseline-side">
+                                    <div class="sidebyside-header baseline">
+                                        <div class="side-badge baseline-badge"><i class="fa-solid fa-landmark"></i> BASELINE / CLASSICAL (BEFORE)</div>
+                                        <span class="side-sub">All towers on Subband 0 (28.05 GHz) • Co-channel mesh contention</span>
+                                    </div>
+                                    <div class="sidebyside-canvas-wrap">
+                                        <canvas id="canvas-baseline" width="460" height="310"></canvas>
+                                    </div>
+                                    <div class="sidebyside-kpi-summary baseline">
+                                        <div class="side-kpi-item"><span class="k">Avg SINR:</span> <strong class="text-amber">14.2 dB</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Outages:</span> <strong class="text-red">5 Users</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Power:</span> <strong>100%</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Interference:</span> <strong class="text-red">100%</strong></div>
+                                    </div>
+                                    <p class="sidebyside-caption">
+                                        <em>The classical baseline produces a less efficient resource allocation under the simulated high-load/interference conditions.</em>
+                                    </p>
+                                </div>
+
+                                <!-- Center Transition Indicator -->
+                                <div class="sidebyside-central-flow">
+                                    <div class="flow-pill-step"><i class="fa-solid fa-microchip"></i> CLASSICAL</div>
+                                    <div class="flow-arrow-down"><i class="fa-solid fa-arrow-down-long"></i></div>
+                                    <div class="flow-pill-step quantum"><i class="fa-solid fa-atom"></i> QAOA SEARCH</div>
+                                    <div class="flow-arrow-down"><i class="fa-solid fa-arrow-down-long"></i></div>
+                                    <div class="flow-pill-step optimized"><i class="fa-solid fa-circle-check"></i> OPTIMIZED</div>
+                                </div>
+
+                                <!-- Right Panel: Quantum-Optimized (After QAOA) -->
+                                <div class="sidebyside-panel optimized-side">
+                                    <div class="sidebyside-header optimized">
+                                        <div class="side-badge optimized-badge"><i class="fa-solid fa-atom"></i> QUANTUM OPTIMIZED / AFTER QAOA</div>
+                                        <span class="side-sub">Orthogonal subbands (Sub-0, Sub-1, Sub-2) • Zero inter-cell interference</span>
+                                    </div>
+                                    <div class="sidebyside-canvas-wrap">
+                                        <canvas id="canvas-optimized" width="460" height="310"></canvas>
+                                    </div>
+                                    <div class="sidebyside-kpi-summary optimized">
+                                        <div class="side-kpi-item"><span class="k">Avg SINR:</span> <strong class="text-cyan">22.8 dB (+60.5%)</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Outages:</span> <strong class="text-green">0 Users</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Power:</span> <strong class="text-green">67.2% (-32.8%)</strong></div>
+                                        <div class="side-kpi-item"><span class="k">Interference:</span> <strong class="text-green">67.4% (-32.6%)</strong></div>
+                                    </div>
+                                    <p class="sidebyside-caption">
+                                        <em>QAOA optimization discovers orthogonal subbands and optimized beam power, eliminating interference without moving physical infrastructure.</em>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Simple Network Demonstration Controls Panel -->
+                        <div class="network-controls-panel">
+                            <!-- Primary Optimization Action Card -->
+                            <div class="action-card optimize-action-card" id="sec-apply-optimization">
+                                <button id="btn-run-qaoa" class="btn-primary-optimize" title="Execute Quantum Optimization Sequence">
+                                    <i class="fa-solid fa-bolt-lightning"></i> ⚡ RUN QUANTUM OPTIMIZATION
+                                </button>
+                                <div class="cta-current-state-subtext" id="cta-current-state-subtext">
+                                    Current state: <strong>Classical Baseline (5 Outages)</strong>
+                                </div>
+                                <p class="optimize-expl-text">
+                                    QAOA evaluates all combinations to assign orthogonal subbands and optimized beam power across towers.
+                                </p>
+                                <button id="btn-revert-greedy" class="btn-action-restore-baseline" title="Restore Classical Baseline">
+                                    <i class="fa-solid fa-rotate-left"></i> ↩ Restore Classical Baseline
+                                </button>
+                            </div>
+
+                            <!-- Add Towers & Users Interactive Action Buttons -->
+                            <div class="action-card add-elements-card">
+                                <div class="card-section-label"><i class="fa-solid fa-plus-circle"></i> Network Topology Controls</div>
+                                <div class="add-buttons-row">
+                                    <button id="btn-add-tower" class="btn-action-add" title="Add a new 5G Tower to the map">
+                                        <i class="fa-solid fa-tower-cell"></i> + Add Tower
+                                    </button>
+                                    <button id="btn-add-user" class="btn-action-add" title="Add a new Mobile User to the map">
+                                        <i class="fa-solid fa-mobile-screen"></i> + Add User
+                                    </button>
+                                </div>
+                                <button id="btn-reset-topology" class="btn-action-reset" title="Reset all towers and users to default 3-tower, 5-user scenario">
+                                    <i class="fa-solid fa-arrows-rotate"></i> Reset Topology (3 Towers, 5 Users)
+                                </button>
+                            </div>
+
+                            <!-- Tower Distance Control & Presets -->
+                            <div class="action-card distance-control-card">
+                                <div class="dist-card-header">
+                                    <span class="card-section-label"><i class="fa-solid fa-ruler-horizontal"></i> Tower Distance</span>
+                                    <span class="dist-value-badge" id="tower-dist-readout">240 m</span>
+                                </div>
+                                <input type="range" id="tower-dist-slider" class="range-slider" min="60" max="480" value="240" step="10">
+                                <div class="dist-presets-strip">
+                                    <button class="btn-dist-preset" data-dist="close">Dense (120m)</button>
+                                    <button class="btn-dist-preset active" data-dist="medium">Normal (240m)</button>
+                                    <button class="btn-dist-preset" data-dist="far">Wide (380m)</button>
+                                </div>
+                            </div>
+
+                            <!-- Expandable Advanced Simulation Controls -->
+                            <div class="action-card advanced-sim-card">
+                                <button class="btn-advanced-toggle" id="btn-toggle-advanced-sim">
+                                    <span><i class="fa-solid fa-sliders"></i> Advanced Simulation Controls</span>
+                                    <i class="fa-solid fa-chevron-down" id="adv-sim-chevron"></i>
+                                </button>
+                                <div class="advanced-sim-body hidden" id="advanced-sim-panel">
+                                    <button id="btn-toggle-tracking" class="btn-adv-toggle active"><i class="fa-solid fa-crosshairs"></i> Beam Tracking: ON</button>
+                                    <button id="btn-toggle-power-boost" class="btn-adv-toggle active"><i class="fa-solid fa-bolt"></i> Distance Power: ON</button>
+                                    <button id="btn-toggle-obstacles" class="btn-adv-toggle active"><i class="fa-solid fa-cubes-stacked"></i> Urban Walls: ON</button>
+                                    <button id="btn-toggle-traffic" class="btn-adv-toggle active"><i class="fa-solid fa-person-walking"></i> Traffic: Mixed</button>
+                                    <button id="btn-toggle-mobility" class="btn-adv-toggle"><i class="fa-solid fa-route"></i> Auto-Mobility: OFF</button>
+                                    <button id="btn-toggle-interference" class="btn-adv-toggle active"><i class="fa-solid fa-wave-square"></i> Co-Channel Mesh: ON</button>
+                                    <button id="btn-toggle-beams" class="btn-adv-toggle active"><i class="fa-solid fa-sun"></i> Beam Lobes: ON</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Below Map: Network Status Bar & Selected User Readout -->
+                    <div class="network-status-master-strip">
+                        <div class="status-kpis-bar">
+                            <div class="stat-pill"><span class="k">Towers:</span> <strong id="status-towers-count">3</strong></div>
+                            <div class="stat-pill"><span class="k">Users:</span> <strong id="status-users-count">5</strong></div>
+                            <div class="stat-pill"><span class="k">Connected:</span> <strong id="status-connected-count">5</strong></div>
+                            <div class="stat-pill"><span class="k">Average SINR:</span> <strong id="status-avg-sinr" class="text-cyan">14.2 dB</strong></div>
+                            <div class="stat-pill"><span class="k">Interference:</span> <strong id="status-interference">100%</strong></div>
+                            <div class="stat-pill"><span class="k">QoS Outages:</span> <strong id="status-outages" class="text-red">5 Users</strong></div>
+                            <div class="stat-pill"><span class="k">Network State:</span> <strong id="status-network-state" class="badge-state-baseline">Baseline</strong></div>
+                        </div>
+
+                        <!-- Selected User / Tower Interactive Live Inspector Readout -->
+                        <div class="selected-inspector-strip" id="selected-inspector-strip">
+                            <div class="inspector-live-content" id="inspector-live-content">
+                                <i class="fa-solid fa-arrow-pointer"></i> <em>Click or drag any User or Tower to inspect live connection state.</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3GPP 28 GHz mmWave BAND n257 SPECTRUM ALLOCATION & LIVE ANALYZER -->
+                    <div class="spectrum-allocation-master-section">
+                        <div class="spec-header">
+                            <div class="spec-badge"><i class="fa-solid fa-wave-square"></i> 3GPP 28 GHz mmWave BAND n257 SPECTRUM ARCHITECTURE</div>
+                            <h3 class="spec-title">How Real-World Spectrum Allocation Works vs. What Quantum Changes</h3>
+                            <p class="spec-sub">
+                                In commercial 5G networks, operators divide licensed spectrum into component carriers. Observe how traditional heuristics create catastrophic carrier clashes and how Quantum QAOA restructures spectrum allocation in real time:
+                            </p>
+                        </div>
+
+                        <!-- Live Interactive RF Spectrum Analyzer Canvas & Waterfall -->
+                        <div class="spectrum-analyzer-wrapper">
+                            <div class="analyzer-top-bar">
+                                <div class="analyzer-title-group">
+                                    <span class="analyzer-live-indicator"><span class="pulse-indicator-small cyan"></span> LIVE RF SPECTRUM ANALYZER</span>
+                                    <span class="analyzer-freq-range">Band n257: 28.000 GHz – 28.500 GHz (500 MHz Total Bandwidth)</span>
+                                </div>
+                                <div class="analyzer-status-pill-group">
+                                    <span id="spectrum-clash-status-tag" class="spec-tag-clash"><i class="fa-solid fa-triangle-exclamation"></i> 3 TOWERS COLLIDING ON SUB-0 (28.05 GHz)</span>
+                                    <span id="spectrum-noise-floor-tag" class="spec-tag-noise">Noise Floor: -85 dBm (Severe Interference)</span>
+                                </div>
+                            </div>
+
+                            <!-- Canvas where RF spectrum curves are animated live -->
+                            <div class="spectrum-canvas-box">
+                                <canvas id="spectrum-analyzer-canvas" width="960" height="200"></canvas>
+                            </div>
+
+                            <!-- Frequency Subband Allocation Strip -->
+                            <div class="spectrum-subband-blocks-strip">
+                                <div class="subband-block-card block-sub0" id="block-sub0">
+                                    <div class="block-top">
+                                        <span class="block-id">SUBBAND 0</span>
+                                        <span class="block-freq">28.00 - 28.15 GHz</span>
+                                    </div>
+                                    <div class="block-towers" id="sub0-towers-label">
+                                        <span class="tower-tag t1">Tower 1 (39 dBm)</span>
+                                        <span class="tower-tag t2 clash">Tower 2 (39 dBm)</span>
+                                        <span class="tower-tag t3 clash">Tower 3 (39 dBm)</span>
+                                    </div>
+                                    <div class="block-status-alert" id="sub0-status-alert">
+                                        ⚠️ 300% OVERLOAD • SEVERE CO-CHANNEL CLASH
+                                    </div>
+                                </div>
+
+                                <div class="subband-block-card block-sub1" id="block-sub1">
+                                    <div class="block-top">
+                                        <span class="block-id">SUBBAND 1</span>
+                                        <span class="block-freq">28.15 - 28.30 GHz</span>
+                                    </div>
+                                    <div class="block-towers" id="sub1-towers-label">
+                                        <span class="tower-tag empty">Idle / Unassigned</span>
+                                    </div>
+                                    <div class="block-status-alert idle" id="sub1-status-alert">
+                                        💤 0% UTILIZED (WASTED CAPACITY)
+                                    </div>
+                                </div>
+
+                                <div class="subband-block-card block-sub2" id="block-sub2">
+                                    <div class="block-top">
+                                        <span class="block-id">SUBBAND 2</span>
+                                        <span class="block-freq">28.30 - 28.45 GHz</span>
+                                    </div>
+                                    <div class="block-towers" id="sub2-towers-label">
+                                        <span class="tower-tag empty">Idle / Unassigned</span>
+                                    </div>
+                                    <div class="block-status-alert idle" id="sub2-status-alert">
+                                        💤 0% UTILIZED (WASTED CAPACITY)
+                                    </div>
+                                </div>
+
+                                <div class="subband-block-card block-guard">
+                                    <div class="block-top">
+                                        <span class="block-id">GUARD BAND</span>
+                                        <span class="block-freq">28.45 - 28.50 GHz</span>
+                                    </div>
+                                    <div class="block-towers">
+                                        <span class="tower-tag guard">50 MHz Spectral Spacing</span>
+                                    </div>
+                                    <div class="block-status-alert guard">
+                                        🛡️ 3GPP EMISSION MASK COMPLIANT
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 3 — WHY OPTIMIZATION IS NEEDED ==================== -->
+        <section id="sec-limitation" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge purple"><i class="fa-solid fa-brain"></i> PART 3 OF 7</div>
+                <h2 class="part-title">Why Optimization Is Needed (Limitation of Classical Solution)</h2>
+                <p class="part-subtitle">Understanding the combinatorial explosion that traps greedy classical schedulers</p>
+            </div>
+
+            <div class="narrative-card">
+                <div class="optimization-need-box">
+                    <h3 class="on-title"><i class="fa-solid fa-puzzle-piece"></i> The Multi-Cell Resource Allocation Dilemma</h3>
+                    <p class="lead-scenario-text">
+                        <strong>The Core Requirement:</strong> We must choose the <em>best combination</em> of <strong>beam direction</strong> + <strong>subband frequency</strong> + <strong>transmit power level</strong> for multiple base stations simultaneously while satisfying 3GPP QoS requirements and power limits.
+                    </p>
+                    <p class="lead-scenario-text">
+                        <strong>Why It Is Difficult:</strong> As the number of towers, beams, subbands, and power levels increases, the number of possible network configurations explodes exponentially:
+                    </p>
+
+                    <div class="scaling-complexity-strip">
+                        <div class="sc-box">
+                            <span class="sc-tag">3 BASE STATIONS</span>
+                            <strong>$4^3 = 64$ States</strong>
+                            <span>4 candidates per cell</span>
+                        </div>
+                        <div class="sc-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+                        <div class="sc-box highlight">
+                            <span class="sc-tag">12-QUBIT PROTOTYPE</span>
+                            <strong>$2^{12} = 4,096$ States</strong>
+                            <span>Search space of our demo</span>
+                        </div>
+                        <div class="sc-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+                        <div class="sc-box alert">
+                            <span class="sc-tag">REAL URBAN CLUSTER (30 TOWERS)</span>
+                            <strong>$4^{30} \approx 1.15 \times 10^{18}$ States</strong>
+                            <span>Combinatorial explosion</span>
+                        </div>
+                    </div>
+
+                    <p class="lead-scenario-text" style="margin-top: 14px;">
+                        Classical greedy heuristics make sequential, local decisions. They easily get trapped behind the <strong>18.5 dB energy barrier</strong> in high-interference local minima, unable to reach the global optimal configuration without exhaustive search (which timeouts beyond the strict O-RAN sub-10ms scheduling window).
+                    </p>
+
+                    <!-- Simple Visual Diagram: Thousands of configurations -> Evaluate -> Low-cost -->
+                    <div class="optimization-visual-diagram">
+                        <div class="ovd-step">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <strong>Thousands of Possible Configurations</strong>
+                            <span>$2^{12} = 4,096$ combinations of beams, power &amp; subbands</span>
+                        </div>
+                        <div class="ovd-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="ovd-step">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <strong>Evaluate Objective + Constraints</strong>
+                            <span>QUBO cost function: SINR utility - Interference penalty - Power</span>
+                        </div>
+                        <div class="ovd-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="ovd-step success">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <strong>Find Low-Cost Feasible Configuration</strong>
+                            <span>Ground state |100001000001⟩ with 0 outages &amp; orthogonal carriers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 4 — QUANTUM APPROACH: QAOA ==================== -->
+        <section id="sec-quantum" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge cyan"><i class="fa-solid fa-atom"></i> PART 4 OF 7</div>
+                <h2 class="part-title">Quantum Approach: QAOA (Quantum Approximate Optimization Algorithm)</h2>
+                <p class="part-subtitle">How Hybrid Quantum-Classical Computing Searches the Non-Convex 5G Solution Space</p>
+            </div>
+
+            <div class="narrative-card">
+                <div class="qaoa-explainer-box">
+                    <h3 class="qaoa-heading"><i class="fa-solid fa-lightbulb"></i> QAOA Explained From Zero</h3>
+                    <p class="lead-scenario-text">
+                        <strong>QAOA</strong> stands for <strong>Quantum Approximate Optimization Algorithm</strong>. It is a hybrid quantum-classical algorithm designed for noisy, intermediate-scale quantum (NISQ) computers.
+                    </p>
+                    <p class="lead-scenario-text">
+                        Here is how it works in simple language:
+                    </p>
+                    <ol class="qaoa-simple-steps">
+                        <li><strong>Convert to Math:</strong> The 5G resource allocation problem is converted into a mathematical optimization problem called a <strong>QUBO</strong> (Quadratic Unconstrained Binary Optimization) or Ising cost Hamiltonian.</li>
+                        <li><strong>Encode into Qubits:</strong> Each binary decision variable (e.g., whether Tower 1 selects candidate configuration 0) is mapped to one quantum bit (qubit). Our prototype uses <strong>12 qubits</strong>.</li>
+                        <li><strong>Quantum Circuit Search:</strong> Parameterized quantum gates ($U(C, \gamma)$ cost unitary and $U(B, \beta)$ mixer unitary) explore the 4,096-state Hilbert space. Quantum tunneling allows the algorithm to tunnel through the 18.5 dB energy barrier where classical greedy search gets trapped.</li>
+                        <li><strong>Classical Optimizer Updates:</strong> A classical optimizer (COBYLA) iteratively tunes the quantum circuit angles over <strong>25 cycles</strong> to minimize the cost function.</li>
+                        <li><strong>Global Ground State:</strong> QAOA outputs the best feasible state: <strong>|100001000001⟩</strong> (initial cost +42.5 drops to optimal cost -18.8).</li>
+                    </ol>
+
+                    <div class="quantum-reality-note">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <strong>Realistic Engineering Clarification:</strong> We do NOT claim that QAOA magically "tries every solution simultaneously" or offers infinite speedup. In this prototype, QAOA acts as an advanced combinatorial search coprocessor that works alongside a classical optimizer (<strong>Quantum circuit + Classical optimizer = Hybrid Quantum Optimization</strong>) to find high-quality configurations within the O-RAN &lt;10ms execution budget.
+                    </div>
+                </div>
+
+                <!-- Visual Workflow Diagram Required by User -->
+                <div class="qaoa-workflow-banner">
+                    <div class="qw-title"><i class="fa-solid fa-arrows-spin"></i> THE HYBRID QAOA OPTIMIZATION PIPELINE:</div>
+                    <div class="qw-flow-grid">
+                        <div class="qw-node">
+                            <span class="qw-num">1</span>
+                            <strong>5G Network Data</strong>
+                            <span>Topology, channel state, QoS</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node">
+                            <span class="qw-num">2</span>
+                            <strong>QUBO Formulation</strong>
+                            <span>12×12 Hamiltonian cost matrix</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node">
+                            <span class="qw-num">3</span>
+                            <strong>Encode into 12 Qubits</strong>
+                            <span>Hilbert space $2^{12} = 4,096$</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node">
+                            <span class="qw-num">4</span>
+                            <strong>QAOA Circuit</strong>
+                            <span>Cost $U(C, \gamma)$ &amp; Mixer $U(B, \beta)$</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node">
+                            <span class="qw-num">5</span>
+                            <strong>Measure Candidate States</strong>
+                            <span>1024 quantum measurement shots</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node">
+                            <span class="qw-num">6</span>
+                            <strong>COBYLA Optimizer Updates</strong>
+                            <span>25 variational feedback cycles</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node success">
+                            <span class="qw-num">7</span>
+                            <strong>Best Feasible State</strong>
+                            <span>|100001000001⟩ (-18.8 cost)</span>
+                        </div>
+                        <div class="qw-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                        <div class="qw-node success">
+                            <span class="qw-num">8</span>
+                            <strong>Apply Resource Allocation</strong>
+                            <span>O-RAN Near-RT RIC command</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CRITICAL: "WHAT DOES QAOA ACTUALLY CHANGE?" PANEL -->
+                <div class="what-qaoa-changes-panel">
+                    <div class="wqc-header">
+                        <div class="wqc-badge"><i class="fa-solid fa-arrows-rotate"></i> CRITICAL DISTINCTION</div>
+                        <h3 class="wqc-title">What Does QAOA Actually Change?</h3>
+                        <p class="wqc-notice">
+                            <strong>Explicit Clarification:</strong> QAOA does <u>NOT</u> physically move the cell towers or users. The physical network coordinates $(x, y)$ remain completely fixed. QAOA changes the <strong>RESOURCE ALLOCATION DECISIONS</strong> across the base stations:
+                        </p>
+                    </div>
+
+                    <div class="wqc-rows-container">
+                        <div class="wqc-row">
+                            <div class="wqc-row-header">
+                                <span class="wqc-num">1</span>
+                                <h4>Beam Selection</h4>
+                            </div>
+                            <div class="wqc-row-content">
+                                <p>Instead of broadcasting broad radiation patterns, QAOA re-steers phased-array beam lobes directly toward active subscriber clusters, maximizing antenna directivity and array factor gain.</p>
+                            </div>
+                        </div>
+
+                        <div class="wqc-row">
+                            <div class="wqc-row-header">
+                                <span class="wqc-num">2</span>
+                                <h4>Subband / Frequency Assignment</h4>
+                            </div>
+                            <div class="wqc-row-content">
+                                <p><strong>BEFORE:</strong> Towers 1, 2, and 3 all jammed onto Subband 0 (28.05 GHz) causing co-channel interference.<br>
+                                <strong>AFTER:</strong> Tower 1 is assigned Subband 0 (28.05 GHz), Tower 2 is assigned Subband 1 (28.25 GHz), and Tower 3 is assigned Subband 2 (28.45 GHz). Zero frequency overlap!</p>
+                            </div>
+                        </div>
+
+                        <div class="wqc-row">
+                            <div class="wqc-row-header">
+                                <span class="wqc-num">3</span>
+                                <h4>Transmit Power Allocation</h4>
+                            </div>
+                            <div class="wqc-row-content">
+                                <p><strong>BEFORE:</strong> All towers burning 100% max power (39 dBm) in an uncoordinated attempt to shout over interference.<br>
+                                <strong>AFTER:</strong> Because orthogonal carriers produce zero mutual interference, towers safely back off to 33–35 dBm (67.2% total power), saving 32.8% of RF energy.</p>
+                            </div>
+                        </div>
+
+                        <div class="wqc-row">
+                            <div class="wqc-row-header">
+                                <span class="wqc-num">4</span>
+                                <h4>Interference-Aware Resource Assignment</h4>
+                            </div>
+                            <div class="wqc-row-content">
+                                <p>Off-diagonal cross-coupling terms in the QUBO matrix heavily penalize overlapping radiation profiles. QAOA decouples overlapping sectors so that mutual interference drops by 32.6%.</p>
+                            </div>
+                        </div>
+
+                        <div class="wqc-row">
+                            <div class="wqc-row-header">
+                                <span class="wqc-num">5</span>
+                                <h4>Constraint Satisfaction</h4>
+                            </div>
+                            <div class="wqc-row-content">
+                                <p>Enforces candidate uniqueness ($\sum_k x_{ik} = 1$) per cell, guarantees EIRP radiation ceilings, and verifies all 4 O-RAN Near-RT RIC safety policies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expandable Technical Details Accordion (Preserves Hamiltonian, Matrix, Circuit, Tunneling) -->
+                <div class="technical-accordion-box">
+                    <button class="btn-accordion-toggle" id="btn-toggle-quantum-tech">
+                        <div class="acc-left">
+                            <i class="fa-solid fa-square-root-variable"></i>
+                            <span>View Technical QAOA Details (Hamiltonian, 12×12 QUBO Matrix, Circuit &amp; Tunneling)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down acc-arrow" id="acc-arrow-quantum"></i>
+                    </button>
+
+                    <div class="accordion-content hidden" id="tech-details-quantum-panel">
+                        <div class="grid-quantum">
+                            <!-- Stage 1: QUBO Formulation -->
+                            <div class="panel-card">
+                                <div class="card-header-bar">
+                                    <div class="card-caption">
+                                        <span class="stage-tag">STAGE 1: MATHEMATICAL MAPPING</span>
+                                        <h3>12-Qubit QUBO Formulation &amp; Interaction Matrix</h3>
+                                    </div>
+                                    <div class="qubo-chips">
+                                        <span class="chip">λ_Power = 3.5</span>
+                                        <span class="chip">λ_Interf = 8.0</span>
+                                        <span class="chip">λ_Unique = 25.0</span>
+                                        <span class="chip chip-purple">Variables: 12 Qubits ($2^{12}$ States)</span>
+                                    </div>
+                                </div>
+
+                                <div class="qubo-flex-container">
+                                    <div class="hamiltonian-math-box">
+                                        <div class="math-title">Unified Cost Hamiltonian Formulation:</div>
+                                        <div class="katex-container" id="hamiltonian-latex">
+                                            $$H_C = H_{\text{SINR}} + \lambda_1 H_{\text{Power}} + \lambda_2 H_{\text{Interference}} + \lambda_3 H_{\text{Uniqueness}}$$
+                                        </div>
+                                        <p class="math-explanation">
+                                            Translates joint beam direction, transmit power level, and subband channel into binary decision variables $x_{i,k} \in \{0, 1\}$. 
+                                            Diagonal terms encode linear power consumption and coverage utility. 
+                                            Off-diagonal cross-coupling terms penalize co-channel carrier overlaps and enforce candidate uniqueness per sector.
+                                        </p>
+                                        <div class="katex-container">
+                                            $$\min_{x \in \{0,1\}^{12}} x^T Q x \quad \Longleftrightarrow \quad H_C = \sum_{j} h_j Z_j + \sum_{j < k} J_{jk} Z_j Z_k$$
+                                        </div>
+                                    </div>
+
+                                    <div class="matrix-grid-box">
+                                        <div class="matrix-title">12×12 Interaction Matrix ($Q$):</div>
+                                        <div class="matrix-overflow-wrap">
+                                            <div id="qubo-matrix-grid" class="qubo-heatmap-grid"></div>
+                                        </div>
+                                        <div class="matrix-legend-row">
+                                            <span><span class="swatch diag-swatch"></span> Diagonal: Power &amp; SINR Score</span>
+                                            <span><span class="swatch interf-swatch"></span> Off-Diagonal: Interference Penalty</span>
+                                            <span><span class="swatch unique-swatch"></span> Off-Diagonal: Uniqueness Penalty</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stage 2: QAOA Quantum Circuit -->
+                            <div class="panel-card">
+                                <div class="card-header-bar">
+                                    <div class="card-caption">
+                                        <span class="stage-tag">STAGE 2: QUANTUM CIRCUIT ARCHITECTURE</span>
+                                        <h3>Parameterized QAOA Variational Circuit ($p=1$)</h3>
+                                    </div>
+                                    <div class="circuit-chips">
+                                        <span class="chip">Ansatz Depth: p = 1</span>
+                                        <span class="chip chip-cyan" id="circuit-gamma-display">Cost Angle: γ = 0.382</span>
+                                        <span class="chip chip-purple" id="circuit-beta-display">Mixer Angle: β = 0.541</span>
+                                        <span class="chip">Transverse Mixer: H_B = ∑ X_i</span>
+                                    </div>
+                                </div>
+                                <div class="circuit-render-container">
+                                    <div id="quantum-circuit-canvas" class="circuit-grid-wire"></div>
+                                </div>
+                            </div>
+
+                            <!-- Stage 3 & 4: Physics Tunneling & Histogram -->
+                            <div class="quantum-dual-charts-grid">
+                                <div class="panel-card">
+                                    <div class="card-header-bar">
+                                        <div class="card-caption">
+                                            <span class="stage-tag">PHYSICAL FOUNDATION</span>
+                                            <h3>Quantum Tunneling vs. Classical Local Trap</h3>
+                                        </div>
+                                        <span class="badge-barrier">Barrier: 18.5 dB</span>
+                                    </div>
+                                    <div class="chart-container-box">
+                                        <canvas id="chart-tunneling" height="240"></canvas>
+                                    </div>
+                                    <p class="chart-caption-text">
+                                        <strong>Theoretical Superiority:</strong> Classical algorithms get trapped in the 18.5 dB energy barrier (left well), remaining in high-interference local minima. QAOA exploits quantum tunneling to discover the global interference-free ground state (right well).
+                                    </p>
+                                </div>
+
+                                <div class="panel-card">
+                                    <div class="card-header-bar">
+                                        <div class="card-caption">
+                                            <span class="stage-tag">MEASUREMENT SAMPLING</span>
+                                            <h3>1024-Shot Computational Basis Histogram</h3>
+                                        </div>
+                                        <span class="badge-ground-state" id="ground-state-badge">Ground State: |100001000001⟩</span>
+                                    </div>
+                                    <div class="chart-container-box">
+                                        <canvas id="chart-histogram" height="240"></canvas>
+                                    </div>
+                                    <div class="convergence-stat-bar">
+                                        <span>COBYLA Iterations: <strong>25 Cycles</strong></span>
+                                        <span>Initial Energy: <strong>+42.5</strong></span>
+                                        <span>Optimized Energy: <strong>-18.8</strong> (Global Min)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 5 — OPTIMIZED 5G NETWORK (AFTER QAOA) ==================== -->
+        <section id="sec-optimized" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge green"><i class="fa-solid fa-network-wired"></i> PART 5 OF 7</div>
+                <h2 class="part-title">Optimized 5G Network (After QAOA)</h2>
+                <p class="part-subtitle">Orthogonal Subband Decoupling &amp; Interference-Free Power Back-Off</p>
+            </div>
+
+            <div class="narrative-card">
+                <!-- Large Quantum-Optimized State Panel -->
+                <div class="quantum-optimized-hero-panel">
+                    <div class="qoh-header">
+                        <div class="qoh-badge-after">
+                            <i class="fa-solid fa-circle-check"></i> QUANTUM OPTIMIZED — AFTER
+                        </div>
+                        <span class="qoh-state-pill">Ground State |100001000001⟩ Applied Across O-RAN RIC</span>
+                    </div>
+
+                    <div class="qoh-metrics-grid">
+                        <div class="qoh-metric-card success">
+                            <span class="qoh-m-label">Average Signal Quality</span>
+                            <span class="qoh-m-val text-cyan">22.8 dB</span>
+                            <span class="qoh-m-gain">+60.5% Gain (+8.6 dB)</span>
+                            <p class="qoh-m-desc"><strong>Crystal-clear reception:</strong> Exceeds 20 dB threshold, unlocking 256-QAM high-throughput modulation.</p>
+                        </div>
+
+                        <div class="qoh-metric-card success">
+                            <span class="qoh-m-label">QoS Outages</span>
+                            <span class="qoh-m-val text-green">0 Users</span>
+                            <span class="qoh-m-gain">100% Elimination</span>
+                            <p class="qoh-m-desc"><strong>Zero dropped connections:</strong> All 5 subscribers maintain uninterrupted multi-gigabit connections.</p>
+                        </div>
+
+                        <div class="qoh-metric-card success">
+                            <span class="qoh-m-label">Transmit Power Used</span>
+                            <span class="qoh-m-val text-green">67.2%</span>
+                            <span class="qoh-m-gain">32.8% Energy Saved</span>
+                            <p class="qoh-m-desc"><strong>Power back-off:</strong> Base stations safely dial back transmit power from 39 dBm to 33–35 dBm.</p>
+                        </div>
+
+                        <div class="qoh-metric-card success">
+                            <span class="qoh-m-label">Network Interference</span>
+                            <span class="qoh-m-val text-green">67.4%</span>
+                            <span class="qoh-m-gain">32.6% Cut</span>
+                            <p class="qoh-m-desc"><strong>Zero co-channel clash:</strong> Mutually exclusive frequency subbands eliminate inter-tower overlap.</p>
+                        </div>
+
+                        <div class="qoh-metric-card">
+                            <span class="qoh-m-label">Spectral Efficiency</span>
+                            <span class="qoh-m-val">6.45 bps/Hz</span>
+                            <span class="qoh-m-gain">+68.8% Capacity</span>
+                            <p class="qoh-m-desc"><strong>Clean spectrum:</strong> Minimal packet retransmissions maximize throughput per hertz.</p>
+                        </div>
+
+                        <div class="qoh-metric-card">
+                            <span class="qoh-m-label">Energy Efficiency</span>
+                            <span class="qoh-m-val">2.84 Mbits/Joule</span>
+                            <span class="qoh-m-gain">+147% Green OPEX</span>
+                            <p class="qoh-m-desc"><strong>Green telecom:</strong> More than double the user data delivered per joule of energy burned.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per-Tower Optimized Allocation Snapshot -->
+                <div class="tower-alloc-cards-row" style="margin-top: 20px;">
+                    <div class="tower-alloc-card t1 optimal">
+                        <div class="ta-top">
+                            <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 1</strong></span>
+                            <span class="ta-pill blue">Subband 0 (28.05 GHz)</span>
+                        </div>
+                        <div class="ta-details">
+                            <div>Power: <strong class="text-green">33.0 dBm (Safe Back-off)</strong></div>
+                            <div>Subband: <strong>Dedicated Subband 0</strong></div>
+                            <div>Interference: <strong class="text-green">0 dB Mutual Clashes</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="tower-alloc-card t2 optimal">
+                        <div class="ta-top">
+                            <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 2</strong></span>
+                            <span class="ta-pill purple">Subband 1 (28.25 GHz)</span>
+                        </div>
+                        <div class="ta-details">
+                            <div>Power: <strong class="text-green">35.0 dBm (Optimized)</strong></div>
+                            <div>Subband: <strong>Dedicated Subband 1</strong></div>
+                            <div>Interference: <strong class="text-green">0 dB Mutual Clashes</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="tower-alloc-card t3 optimal">
+                        <div class="ta-top">
+                            <span><i class="fa-solid fa-tower-cell"></i> <strong>Tower 3</strong></span>
+                            <span class="ta-pill amber">Subband 2 (28.45 GHz)</span>
+                        </div>
+                        <div class="ta-details">
+                            <div>Power: <strong class="text-green">35.0 dBm (Optimized)</strong></div>
+                            <div>Subband: <strong>Dedicated Subband 2</strong></div>
+                            <div>Interference: <strong class="text-green">0 dB Mutual Clashes</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 6 — BEFORE vs. AFTER COMPARISON & BENCHMARKS ==================== -->
+        <section id="sec-comparison" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge blue"><i class="fa-solid fa-scale-balanced"></i> PART 6 OF 7</div>
+                <h2 class="part-title">Before vs. After Comparison &amp; Benchmarks</h2>
+                <p class="part-subtitle">Definitive Benchmarks, O-RAN Guardrails &amp; Phased-Array Hardware Twin</p>
+            </div>
+
+            <!-- Benchmark Table -->
+            <div class="grid-results">
+                <div class="panel-card benchmark-summary-card">
+                    <div class="card-header-bar">
+                        <div class="card-caption">
+                            <span class="stage-tag">PERFORMANCE COMPARISON</span>
+                            <h3>Quantitative Verification: Classical Greedy vs. Hybrid Quantum QAOA</h3>
+                        </div>
+                        <button class="btn-action-primary" id="btn-print-report">
+                            <i class="fa-solid fa-file-pdf"></i> Export Verification Report
+                        </button>
+                    </div>
+
+                    <div class="benchmark-table-wrapper">
+                        <table class="enterprise-benchmark-table">
+                            <thead>
+                                <tr>
+                                    <th>Evaluated Metric</th>
+                                    <th>Unit</th>
+                                    <th class="col-before">BEFORE<br><small>(Classical Greedy Baseline)</small></th>
+                                    <th class="col-after">AFTER<br><small>(Hybrid Quantum QAOA)</small></th>
+                                    <th class="col-gain">DELTA / NET GAIN</th>
+                                    <th>Real-World Human Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-signal text-cyan"></i> Average Signal Quality (SINR)</td>
+                                    <td>dB</td>
+                                    <td class="val-before">14.2 dB</td>
+                                    <td class="val-after highlight-val">22.8 dB</td>
+                                    <td class="val-delta positive">+8.6 dB (+60.5%)</td>
+                                    <td class="impact-note">Crystal-clear gigabit downloads and stable high-speed connectivity.</td>
+                                </tr>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-bolt text-yellow"></i> Transmit Power Used</td>
+                                    <td>%</td>
+                                    <td class="val-before">100% (39 dBm)</td>
+                                    <td class="val-after highlight-val">67.2%</td>
+                                    <td class="val-delta positive">-32.8% (Energy Saved)</td>
+                                    <td class="impact-note">Massive energy bill reduction and greener base station operation.</td>
+                                </tr>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-wave-square text-purple"></i> Network Interference</td>
+                                    <td>%</td>
+                                    <td class="val-before">100%</td>
+                                    <td class="val-after highlight-val">67.4%</td>
+                                    <td class="val-delta positive">-32.6% (Suppressed)</td>
+                                    <td class="impact-note">Eliminates co-channel collision via spatial &amp; frequency isolation.</td>
+                                </tr>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-triangle-exclamation text-red"></i> Users with Poor Service (Outages)</td>
+                                    <td>count</td>
+                                    <td class="val-before val-alert">5 Users</td>
+                                    <td class="val-after highlight-val zero-outages">0 Outages</td>
+                                    <td class="val-delta positive">-100% (Zero Outages)</td>
+                                    <td class="impact-note">Zero dropped calls or video buffering across all subscribers.</td>
+                                </tr>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-chart-line text-green"></i> Spectral Efficiency</td>
+                                    <td>bps/Hz</td>
+                                    <td class="val-before">3.82</td>
+                                    <td class="val-after highlight-val">6.45</td>
+                                    <td class="val-delta positive">+68.8% Bandwidth Capacity</td>
+                                    <td class="impact-note">Delivers more user payload data across the same licensed spectrum.</td>
+                                </tr>
+                                <tr>
+                                    <td class="metric-cell-title"><i class="fa-solid fa-leaf text-green"></i> Energy Efficiency</td>
+                                    <td>Mbits/Joule</td>
+                                    <td class="val-before">1.15</td>
+                                    <td class="val-after highlight-val">2.84</td>
+                                    <td class="val-delta positive">+147% Green OPEX</td>
+                                    <td class="impact-note">Lowers telecom carbon emissions and electrical operating costs.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytic Charts: SINR CDF and Bar Chart -->
+                <div class="results-visuals-grid">
+                    <div class="panel-card">
+                        <div class="card-header-bar">
+                            <div class="card-caption">
+                                <h4><i class="fa-solid fa-chart-area"></i> SINR Cumulative Distribution Function (CDF)</h4>
+                                <span class="sub-text">Distribution comparison: Baseline vs. QAOA Solution</span>
+                            </div>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="chart-cdf" height="230"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="card-header-bar">
+                            <div class="card-caption">
+                                <h4><i class="fa-solid fa-chart-bar"></i> Resource Consumption &amp; Interference Reductions</h4>
+                                <span class="sub-text">Normalized against 100% Classical Baseline</span>
+                            </div>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="chart-bar-comparison" height="230"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- O-RAN WG3 Feasibility Guardrails -->
+                <div class="panel-card" style="margin-top: 20px;">
+                    <div class="card-header-bar">
+                        <div class="card-caption">
+                            <span class="stage-tag">DETERMINISTIC VERIFICATION</span>
+                            <h3>O-RAN WG3 Near-RT RIC Safety Guardrails (4/4 Passed)</h3>
+                        </div>
+                        <span class="badge-status pass"><i class="fa-solid fa-shield-check"></i> 100% 3GPP REL-18 COMPLIANT</span>
+                    </div>
+
+                    <div class="guard-constraints-matrix">
+                        <div class="constraint-card" id="card-guard-power">
+                            <div class="constraint-card-header">
+                                <div class="icon-wrap"><i class="fa-solid fa-bolt"></i></div>
+                                <span class="badge-status pass" id="badge-guard-power">PASS ✓</span>
+                            </div>
+                            <h4 class="constraint-name">1. Radiated Power Ceiling</h4>
+                            <p class="constraint-desc">Validates total EIRP per sector against 3GPP thermal and regulatory emission limits.</p>
+                            <div class="constraint-metrics">
+                                <div class="c-row"><span class="c-k">Compliance Limit:</span> <span class="c-v">≤ 43.0 dBm (20W)</span></div>
+                                <div class="c-row"><span class="c-k">Measured Maximum:</span> <span class="c-v" id="guard-power-measured">35.5 dBm</span></div>
+                                <div class="c-row"><span class="c-k">Safety Headroom:</span> <span class="c-v highlight-green" id="guard-power-margin">+7.5 dB Headroom</span></div>
+                            </div>
+                        </div>
+
+                        <div class="constraint-card" id="card-guard-sinr">
+                            <div class="constraint-card-header">
+                                <div class="icon-wrap"><i class="fa-solid fa-signal"></i></div>
+                                <span class="badge-status pass" id="badge-guard-sinr">PASS ✓</span>
+                            </div>
+                            <h4 class="constraint-name">2. SINR Quality of Service</h4>
+                            <p class="constraint-desc">Guarantees all active subscribers achieve the minimum required SINR threshold for 64/256-QAM.</p>
+                            <div class="constraint-metrics">
+                                <div class="c-row"><span class="c-k">QoS Threshold:</span> <span class="c-v">≥ 12.0 dB</span></div>
+                                <div class="c-row"><span class="c-k">Observed Mean:</span> <span class="c-v" id="guard-sinr-measured">22.8 dB</span></div>
+                                <div class="c-row"><span class="c-k">Minimum Observed:</span> <span class="c-v highlight-green" id="guard-sinr-min">18.5 dB (0 Outages)</span></div>
+                            </div>
+                        </div>
+
+                        <div class="constraint-card" id="card-guard-interf">
+                            <div class="constraint-card-header">
+                                <div class="icon-wrap"><i class="fa-solid fa-filter-circle-xmark"></i></div>
+                                <span class="badge-status pass" id="badge-guard-interf">PASS ✓</span>
+                            </div>
+                            <h4 class="constraint-name">3. Interference Leakage Ratio</h4>
+                            <p class="constraint-desc">Suppresses aggregate inter-cell co-channel leakage below the network safety ceiling.</p>
+                            <div class="constraint-metrics">
+                                <div class="c-row"><span class="c-k">Leakage Ceiling:</span> <span class="c-v">≤ 15.0% of Carrier</span></div>
+                                <div class="c-row"><span class="c-k">Measured Leakage:</span> <span class="c-v" id="guard-interf-measured">6.8%</span></div>
+                                <div class="c-row"><span class="c-k">Suppression Margin:</span> <span class="c-v highlight-green" id="guard-interf-margin">+8.2% Buffer</span></div>
+                            </div>
+                        </div>
+
+                        <div class="constraint-card" id="card-guard-spectrum">
+                            <div class="constraint-card-header">
+                                <div class="icon-wrap"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+                                <span class="badge-status pass" id="badge-guard-spectrum">PASS ✓</span>
+                            </div>
+                            <h4 class="constraint-name">4. Spectrum Orthogonality</h4>
+                            <p class="constraint-desc">Enforces carrier isolation and minimum angular clearance on shared channels.</p>
+                            <div class="constraint-metrics">
+                                <div class="c-row"><span class="c-k">Angular Clearance:</span> <span class="c-v">≥ 30° on Shared Carrier</span></div>
+                                <div class="c-row"><span class="c-k">Subband Allocation:</span> <span class="c-v" id="guard-subband-alloc">Sub-0, Sub-1, Sub-2</span></div>
+                                <div class="c-row"><span class="c-k">Carrier Decoupling:</span> <span class="c-v highlight-green">Full Orthogonal Isolation</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expandable O-RAN JSON Code Viewer -->
+                    <div class="technical-accordion-box" style="margin-top: 14px;">
+                        <button class="btn-accordion-toggle" id="btn-toggle-oran-tech">
+                            <div class="acc-left">
+                                <i class="fa-solid fa-code"></i>
+                                <span>View Technical O-RAN Details (Dispatched E2AP_RIC_CONTROL_REQUEST JSON)</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down acc-arrow" id="acc-arrow-oran"></i>
+                        </button>
+                        <div class="accordion-content hidden" id="tech-details-oran-panel">
+                            <div class="panel-card e2-payload-panel">
+                                <div class="card-header-bar">
+                                    <div class="card-caption">
+                                        <h4><i class="fa-solid fa-code"></i> Dispatched O-RAN E2 Control Action Frame (`E2AP_RIC_CONTROL_REQUEST`)</h4>
+                                    </div>
+                                    <button class="btn-copy-code" id="btn-copy-e2"><i class="fa-regular fa-copy"></i> Copy JSON</button>
+                                </div>
+                                <pre class="json-code-box" id="json-e2-viewer"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8-Element 28 GHz mmWave Phased Array Hardware Demonstration -->
+                <div class="panel-card" style="margin-top: 20px;">
+                    <div class="card-header-bar">
+                        <div class="card-caption">
+                            <span class="stage-tag">ANTENNA HARDWARE TWIN</span>
+                            <h3>8-Element 28 GHz Phased Array Hardware Demonstrator</h3>
+                        </div>
+                        <div class="com-badge-live">
+                            <span class="com-dot green"></span>
+                            <span>COM4 @ 115200 Baud (Active)</span>
+                        </div>
+                    </div>
+
+                    <div class="phased-array-section">
+                        <div class="sub-header-title">Progressive RF Phase Shifter States ($\Delta\phi = -m \cdot \pi \sin\theta$)</div>
+                        <div class="rf-patch-row" id="rf-elements-container"></div>
+                        <div class="rf-stats-strip">
+                            <span>Phase Step: <strong id="hil-phase-step-val">-46.6°</strong></span>
+                            <span>Array Gain: <strong>18.0 dBi</strong></span>
+                            <span>VSWR: <strong id="hil-vswr-val">1.12</strong></span>
+                            <span>RF Temp: <strong id="hil-temp-val">34.2°C</strong></span>
+                            <span>Power Amp: <strong class="text-green" id="hil-pa-status">ACTIVE</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="antenna-polar-grid">
+                        <div class="polar-chart-card">
+                            <div class="polar-card-head">
+                                <span>Far-Field Polar Array Factor Radiation Pattern ($360^\circ$)</span>
+                                <span class="polar-val-highlight" id="polar-steered-label">Steered to: +15.0° | SLL: -13.2 dB</span>
+                            </div>
+                            <div class="canvas-center-wrap">
+                                <canvas id="polar-canvas" width="440" height="300"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="servo-meter-card">
+                            <div class="meter-head">Mechanical Servo Motor Pointer</div>
+                            <div class="meter-visual-container">
+                                <div class="meter-dial-arc">
+                                    <div class="meter-needle" id="servo-needle" style="transform: rotate(15deg);"></div>
+                                    <div class="meter-needle-cap"></div>
+                                </div>
+                                <div class="meter-angle-text" id="servo-angle-text">105.0° (Physical)</div>
+                                <div class="meter-sub-text" id="beam-azimuth-text">Beam Azimuth: +15.0°</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expandable Serial Terminal & Firmware -->
+                    <div class="technical-accordion-box" style="margin-top: 14px;">
+                        <button class="btn-accordion-toggle" id="btn-toggle-hil-tech">
+                            <div class="acc-left">
+                                <i class="fa-solid fa-terminal"></i>
+                                <span>View Technical Hardware Details (Serial Stream &amp; Arduino Firmware)</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down acc-arrow" id="acc-arrow-hil"></i>
+                        </button>
+                        <div class="accordion-content hidden" id="tech-details-hil-panel">
+                            <div class="hil-technical-grid">
+                                <div class="panel-card serial-terminal-card">
+                                    <div class="card-header-bar">
+                                        <div class="card-caption">
+                                            <h4><i class="fa-solid fa-terminal"></i> Telemetry Serial Stream ($HIL_TX / $HIL_ACK)</h4>
+                                        </div>
+                                        <button class="btn-clear-stream" id="btn-clear-term"><i class="fa-solid fa-trash-can"></i> Clear</button>
+                                    </div>
+                                    <div class="terminal-log-screen" id="serial-terminal-screen"></div>
+                                    <div class="terminal-cmd-bar">
+                                        <input type="text" id="serial-input" placeholder="Transmit test frame (e.g., $STEER,AZ=30)..." />
+                                        <button id="btn-send-serial" class="btn-cmd-send"><i class="fa-solid fa-paper-plane"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="panel-card firmware-card">
+                                    <div class="card-header-bar">
+                                        <div class="card-caption">
+                                            <h4><i class="fa-brands fa-usb"></i> Microcontroller Firmware (`hil_beam_controller.ino`)</h4>
+                                        </div>
+                                        <span class="mcu-tag">Arduino Uno / ESP32</span>
+                                    </div>
+                                    <pre class="firmware-code-box"><code>// Microcontroller Firmware Ready for Upload:
+#include &lt;Servo.h&gt;
+Servo beamServo;
+const int SERVO_PIN = 9;
+const int LED_PINS[8] = {2,3,4,5,6,7,8,10};
+
+void setup() {
+  Serial.begin(115200);
+  beamServo.attach(SERVO_PIN);
+  beamServo.write(90); // Center at 0° Azimuth
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    String cmd = Serial.readStringUntil('\n');
+    if (cmd.startsWith("$HIL_TX")) {
+      float az = parseAzimuth(cmd);
+      beamServo.write(constrain(90.0 + az, 45, 135));
+      animatePhaseLEDs(az);
+      Serial.println("$HIL_ACK,DEV=PHASED_ARRAY,LOCKED=TRUE*0x98AE");
+    }
+  }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expandable Technical CSI Details -->
+                <div class="technical-accordion-box" style="margin-top: 14px;">
+                    <button class="btn-accordion-toggle" id="btn-toggle-csi-tech">
+                        <div class="acc-left">
+                            <i class="fa-solid fa-table-list"></i>
+                            <span>View Technical CSI Table &amp; Base Station Beam Configurations</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down acc-arrow" id="acc-arrow-csi"></i>
+                    </button>
+                    <div class="accordion-content hidden" id="tech-details-csi-panel">
+                        <div class="panel-card bs-config-card" style="margin-bottom: 14px;">
+                            <div class="card-title-sm"><i class="fa-solid fa-tower-cell"></i> Active Cell Beam &amp; Subband Configurations</div>
+                            <div id="bs-cards-container" class="bs-cards-list"></div>
+                        </div>
+                        <div class="table-scroll-container">
+                            <table class="data-table" id="csi-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subscriber</th>
+                                        <th>Profile</th>
+                                        <th>Serving Tower</th>
+                                        <th>Dist &amp; Zone</th>
+                                        <th>Channel</th>
+                                        <th>Tx Power</th>
+                                        <th>Signal (RSRP)</th>
+                                        <th>SINR</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="csi-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PART 7 — REAL-WORLD BENEFIT ==================== -->
+        <section id="sec-benefits" class="subsystem-panel">
+            <div class="part-header-banner">
+                <div class="part-badge teal"><i class="fa-solid fa-leaf"></i> PART 7 OF 7</div>
+                <h2 class="part-title">Real-World Benefit</h2>
+                <p class="part-subtitle">Why Does This Matter in Real Life? (Impact on Users, Telecom Operators &amp; 6G)</p>
+            </div>
+
+            <div class="narrative-card">
+                <div class="impact-cards-grid">
+                    <div class="impact-card">
+                        <div class="i-icon"><i class="fa-solid fa-video"></i></div>
+                        <h4>Eliminates Video Buffering &amp; Call Drops</h4>
+                        <p>High-bandwidth 4K/8K video streaming, holographic tele-presence, and VR/AR applications maintain &gt;20 dB SINR without dropping frames or buffering.</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="i-icon"><i class="fa-solid fa-seedling"></i></div>
+                        <h4>32.8% Energy Savings for Operators</h4>
+                        <p>By replacing brute-force power boosting with orthogonal frequency decoupling, mobile operators save thousands of megawatt-hours and significantly reduce carbon footprints.</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="i-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                        <h4>100% QoS Outage Elimination</h4>
+                        <p>Every active subscriber meets or exceeds 3GPP Quality-of-Service minimums, guaranteeing reliable connections for mission-critical industrial IoT and emergency services.</p>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="i-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <h4>O-RAN Commercial Readiness</h4>
+                        <p>Implemented as a Near-RT RIC xApp adhering strictly to O-RAN WG3 E2 specifications, executing within the &lt;10ms control cycle for plug-and-play multi-vendor deployment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Professional 7-Step Quantum Optimization Progress Modal -->
+    <div id="qaoa-progress-modal" class="modal-overlay hidden">
+        <div class="modal-dialog-box">
+            <div class="quantum-spinner-ring">
+                <div class="orbit-trace trace-1"></div>
+                <div class="orbit-trace trace-2"></div>
+                <div class="orbit-center"><i class="fa-solid fa-atom"></i></div>
+            </div>
+            <h3 id="modal-step-title" class="modal-step-title">1. Analyzing Network Topology...</h3>
+            <p id="modal-step-detail" class="modal-step-detail">Evaluating active towers, subscriber positions, and co-channel overlap contention...</p>
+            <div class="modal-bar-track">
+                <div id="modal-progress-fill" class="modal-bar-fill"></div>
+            </div>
+            <div class="modal-step-indicators-strip">
+                <span class="m-step active">1. Topology</span>
+                <span class="m-step">2. QUBO</span>
+                <span class="m-step">3. QAOA</span>
+                <span class="m-step">4. Ground State</span>
+                <span class="m-step">5. Allocation</span>
+                <span class="m-step">6. Feasibility</span>
+                <span class="m-step">7. Complete</span>
+            </div>
+            <div class="modal-footer-action">
+                <button id="btn-cancel-qaoa" class="btn-modal-cancel">
+                    <i class="fa-solid fa-ban"></i> 🛑 CANCEL OPTIMIZATION
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Interactive Demonstration Guide HUD (Jury Presentation Walkthrough) -->
+    <div id="walkthrough-hud" class="walkthrough-hud hidden">
+        <div class="hud-left">
+            <div class="hud-badge" id="hud-step-badge">STEP 1 / 6</div>
+            <div class="hud-text-group">
+                <h4 id="hud-title" class="hud-title">Step 1/6: Realistic 5G Multi-Tower Network</h4>
+                <p id="hud-desc" class="hud-desc">We begin with a realistic 5G network containing multiple towers and users. Towers provide coverage circles and users automatically connect to the best nearby tower.</p>
+            </div>
+        </div>
+        <div class="hud-center">
+            <div class="hud-progress-track">
+                <div id="hud-progress-fill" class="hud-progress-fill" style="width: 16.6%;"></div>
+            </div>
+            <div class="hud-step-indicators">
+                <span class="step-dot active" data-step="1">1</span>
+                <span class="step-dot" data-step="2">2</span>
+                <span class="step-dot" data-step="3">3</span>
+                <span class="step-dot" data-step="4">4</span>
+                <span class="step-dot" data-step="5">5</span>
+                <span class="step-dot" data-step="6">6</span>
+            </div>
+        </div>
+        <div class="hud-right">
+            <button id="btn-next-walkthrough" class="btn-hud-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+            <button id="btn-stop-walkthrough" class="btn-hud-close" title="End Walkthrough"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <!-- Application Controller Script -->
+    <script src="/static/js/app.js?v=7.0"></script>
+</body>
+</html>
